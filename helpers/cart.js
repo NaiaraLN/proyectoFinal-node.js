@@ -56,7 +56,7 @@ class Cart {
             let allCarts = await this.getAll()
             let cart = allCarts.filter((el) => el.id !== id)
             await fs.promises.writeFile(this.fileName, JSON.stringify(cart));
-            return product
+            return cart
         }
         console.log('El contenido fue eliminado')
     }

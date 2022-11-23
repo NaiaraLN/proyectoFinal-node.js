@@ -18,7 +18,7 @@ routerCart.post('/productos', async (req, res) => {
 
 routerCart.delete('/:id', async (req, res) => {
   Cart.deleteAll()
+  res.send('carrito eliminado')
 })
-
 
 module.exports = routerCart;
