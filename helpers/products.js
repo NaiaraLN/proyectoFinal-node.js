@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = __dirname;
+const path = __dirname+'/../helpers/';
 
 class Products {
 
