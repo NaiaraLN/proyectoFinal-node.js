@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const routerProducts = require('./routes/products.routes');
 const routerCart = require('./routes/cart.routes')
@@ -7,7 +6,6 @@ const PORT = process.env.PORT || 8080;
 
 const server = express();
 
-server.use(express.static(path.join(__dirname, "public")));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 

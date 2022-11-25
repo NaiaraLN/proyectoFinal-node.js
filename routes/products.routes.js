@@ -3,43 +3,42 @@ const Products = require('../helpers/products');
 
 const routerProducts = Router();
 
+let file = new Products("productos.json")
+
 routerProducts.get('/', async (req, res) => {
-    const listProduct = await Products.getAll();
+    const listProduct = await file.getAll();
     res.json(listProduct);
 });
 
 routerProducts.get('/:id', async (req, res) => {
-    let id = parseInt(req.params.id)
-        if(id >= 1) {
-            let product = await Products.getByID(id)
-            res.json(product);
-        }
-        else {
-            res.send({error : 'Producto no encontrado'})
-        }
+    let id = parseInt(req.params.id);
+    let product = await file.getByID(id);
+    if(product) {
+        res.json(product);
+    }
+    else {
+        res.send({error : 'Producto no encontrado'})
+    }
 });
 
 routerProducts.post('/', async (req, res) => {
-    const {name, description, code, thumbnail, price, stock} = req.body;
-    const date = Date.now()
-    const newProduct = new Products(date, name, description, code, thumbnail, price, stock)
-    await newProduct.save()
-    res.json(newProduct);
+    const product = req.body;
+    await file.save(product);
+    const listProduct = await file.getAll();
+    res.json(listProduct);
 });
 
 routerProducts.put('/:id', async (req, res) => {
     let id = parseInt(req.params.id)
-    let listProduct = await Products.getAll()
-    let product = await Products.getByID(id)
-    let newProduct = req.body;
-    product = newProduct;
-    res.json(listProduct);
+    let product = req.body
+    let updateProd = await file.update(id, product);
+    res.json(updateProd);
 });
 
 routerProducts.delete("/:id", async (req, res) => {
     let id = parseInt(req.params.id);
-    Products.deleteByID(id)
-    let listProduct = await Products.getAll();
+    await file.deleteByID(id)
+    let listProduct = await file.getAll();
     res.json(listProduct);    
 });
 

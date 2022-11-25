@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": 2,
+    "date": 1669335351401,
+    "products": [
+      {
+        "id": 2,
+        "name": "libro 2do de Brandon Sanderson",
+        "description": "Otro libro de fantasía",
+        "code": 123456,
+        "thumbnail": "https://images.bajalibros.com/hSe4EeJS_ECKn6-jHqHtxJ4OerE=/fit-in/292x446/filters:fill(f8f8f8):quality(90):format(webp)/d2d6tho5fth6q4.cloudfront.net/extast1672506_218c399b3f8802279a17ea3e8e6c8c4cd84b67ab.jpg",
+        "price": 4500,
+        "stock": 10
+      }
+    ]
+  }
+]
