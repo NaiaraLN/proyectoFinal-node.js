@@ -1,6 +1,6 @@
 const express = require('express');
-const routerProducts = require('./routes/products.routes');
-const routerCart = require('./routes/cart.routes')
+const {ProductsDaoFiles} = require('./daos/importsDao');
+const {CartDaoFiles} = require('./daos/importsDao')
 
 const PORT = process.env.PORT || 8080;
 
@@ -9,8 +9,11 @@ const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use('/api/productos', routerProducts);
-server.use('/api/carrito', routerCart);
+const prodControllerFS = new ProductsDaoFiles()
+const cartControllerFS = new CartDaoFiles()
+
+server.use('/api/productos', prodControllerFS.getRouter());
+server.use('/api/carrito', cartControllerFS.getRouter());
 
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
