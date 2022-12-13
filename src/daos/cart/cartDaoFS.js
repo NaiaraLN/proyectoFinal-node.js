@@ -1,7 +1,7 @@
 const { Router } = require('express');
-const PersistenceFiles = require('../../helpers/persistenceFiles');
+const ContainerFiles = require('../../containers/containerFiles');
 
-class CartDaoFiles extends PersistenceFiles {
+class CartDaoFiles extends ContainerFiles {
   constructor(){
     super('cart.json')
     this.cartRouter = Router()

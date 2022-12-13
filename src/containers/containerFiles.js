@@ -1,7 +1,7 @@
 const fs = require('fs');
-const path = __dirname+'/../helpers/';
+const path = __dirname+'/../files/';
 
-class PersistenceFiles {
+class ContainerFiles {
     constructor(name) {
         this.fileName = name
     };
@@ -110,4 +110,4 @@ class PersistenceFiles {
     }
 };
 
-module.exports = PersistenceFiles;
+module.exports = ContainerFiles;

@@ -1,24 +1,10 @@
 const mongoose = require('mongoose');
+const {productModel} = require('../model/productsModel')
+const cartModel = require('../model/cartModel')
 
-//CREO SCHEMAS Y MODELS PARA PRODUCTOS Y CARRITO
-const productsSchema = new mongoose.Schema({
-    date:{ type: Date, required: true},
-    name:{type: String, required:true},
-    description:{type: String, required:true},
-    code:{type: Number, required:true, unique: true},
-    thumbnail:{type: String, required:true},
-    price:{type: Number, required:true},
-    stock:{type: Number, required:true}
-})
-const cartSchema = new mongoose.Schema({
-    date:{ type: Date, required: true},
-    products:{type: Array, required:true}
-})
+mongoose.set("strictQuery", false);
 
-const productModel = mongoose.model('products', productsSchema)
-const cartModel = mongoose.model('cart', cartSchema)
-
-class PersistenceMongoDB {
+class ContainerMongoDB {
     constructor(connection){
         this.connection = connection
     }
@@ -46,10 +32,10 @@ class PersistenceMongoDB {
         let objId = mongoose.Types.ObjectId(id)
         try {
             if (collection == 'products') {
-                let product = await productModel.find({_id:objId})
+                let product = await productModel.findById({_id:objId})
                 return product
             } else {
-                let cart = await cartModel.find({_id:objId})
+                let cart = await cartModel.findById({_id:objId},{products:1})
                 return cart
             }
         } catch (error) {
@@ -60,11 +46,11 @@ class PersistenceMongoDB {
     async save(collection,product){
         try {
             if (collection == 'products') {
-                let newProduct = new model.productModel(product)
+                let newProduct = new productModel(product)
                 let saveProduct = await newProduct.save()
                 return saveProduct
             } else {
-                let newCart = new model.cartModel(product)
+                let newCart = new cartModel(product)
                 let saveCart = await newCart.save()
                 return saveCart
             }
@@ -78,7 +64,7 @@ class PersistenceMongoDB {
         try {
             if (collection == 'products') {
                 let newProduct = await productModel.updateOne({
-                    _id:objId
+                    '_id':objId
                 },{$set:{
                     date:product.date,
                     name:product.name,
@@ -92,9 +78,8 @@ class PersistenceMongoDB {
             } else {
                 let newCart = await cartModel.updateOne({
                     _id:objId
-                },{$set:{
-                    date:product.date,
-                    products:product.products
+                },{$push:{
+                    'products':product
                 }})
                 return newCart
             }
@@ -116,12 +101,25 @@ class PersistenceMongoDB {
             console.log(`Error al eliminar producto${error}`);
         }
     }
-    async closeConnection(){
-        return await mongoose.disconnect();
+    async deleteProdCart(cartId,prodId, cart) {
+        let objId = mongoose.Types.ObjectId(cartId)
+        try {
+            let prod = cart.products.find((prod) => prod._id.toString() === prodId)
+            if (prod) {
+                let newCart = await cartModel.updateOne({_id:objId}, {$pull:{products:prod}})
+                return newCart
+            } else {
+                console.log('No se encontró el producto para eliminarlo')
+            }
+        } catch (error) {
+            console.log(`Error al eliminar el producto del carrito ${error}`)
+        }
     }
 
-
+    async getConnection () {
+        await this.startConnection()
+    }
 }
 
-module.exports = PersistenceMongoDB;
+module.exports = ContainerMongoDB;
 

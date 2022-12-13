@@ -1,7 +1,7 @@
 const { Router } = require('express');
-const PersistenceFiles = require('../../helpers/persistenceFiles');
+const ContainerFiles = require('../../containers/containerFiles');
 
-class ProductsDaoFiles extends PersistenceFiles{
+class ProductsDaoFiles extends ContainerFiles{
     constructor(){
         super('products.json')
         this.productsRouter = Router()
@@ -23,9 +23,7 @@ class ProductsDaoFiles extends PersistenceFiles{
         this.productsRouter.post('/', async (req, res) => {
             const product = req.body;
             super.save(product)
-            .then(() => {
-                return super.getAll()
-            })
+            .then(() => super.getAll())
             .then((prods) => res.json(prods))
             .catch((err) => res.send({error : `No se pudo guardar el producto ${err}`}))
         });
