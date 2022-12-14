@@ -70,7 +70,7 @@ class ProductsDaoMongo extends ContainerMongoDB{
             try {
                 let id = req.params.id;
                 let delProd = await super.deleteByID('products',id)
-                return delProd
+                return res.json(delProd)
             } catch (error) {
                 return res.send({error: `error al eliminar producto ${err}`})
             }

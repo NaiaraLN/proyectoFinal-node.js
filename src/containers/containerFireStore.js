@@ -1,63 +1,13 @@
-const {getFirestore} = require('firebase-admin/firestore')
-let admin = require("firebase-admin");
-
-let serviceAccount = require("../db/data.json");
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
-
-let db = admin.firestore();
-
-//AGREGAR carts.add({object})
-/* LISTAR
-    const snapshot = await carts.get();
-    snapshot.forEach((doc) => {
-        let cart = {
-            id:doc.id,
-            ...doc.data()
-        }
-    })
-
-    snapshot.forEach((doc) => {
-        let cart = {
-            id:doc.id,
-            products:doc.products
-        }
-    })
-*/
-
-/* MODIFICAR
-    await carts.doc(cartId.id).update({products:products})
-    con productos:
-    await products.doc(prod.id).update({
-        id:product.id,
-        date:product.date,
-        name:product.name,
-        description:product.description,
-        code:product.code,
-        thumbnail:product.thumbnail,
-        price:product.price,
-        stock:product.stock
-    })
-*/
-
-/* ELIMINAR UN DOCUMENTO
-    await carts.doc(cart.id).delete()
-*/
-
-
-
 class ContainerFireStore {
-    constructor(){
-        this.carts = db.collection('carts'),
-        this.products = db.collection('products')
+    constructor(coll,db){
+        this.collName = coll
+        this.collection = db.collection(this.collName)
     }
 
     async getAll(collection) {
         try {
-            if (collection == 'products') {
-                const snapshot = await this.products.get();
+            if (this.collName === 'products' && collection === 'products') {
+                const snapshot = await this.collection.get();
                 snapshot.forEach((doc) => {
                     let product = {
                         id:doc.id,
@@ -67,7 +17,7 @@ class ContainerFireStore {
                 })
                 return snapshot
             } else {
-                const snapshot = await this.carts.get();
+                const snapshot = await this.collection.get();
                 snapshot.forEach((doc) => {
                     let cart = {
                         id:doc.id,
@@ -85,8 +35,8 @@ class ContainerFireStore {
 
     async getByID(collection,id){
         try {
-            if (collection == 'products') {
-                const snapshot = this.products.doc(id)
+            if (this.collName === 'products' && collection === 'products') {
+                const snapshot = this.collection.doc(id)
                 let doc = await snapshot.get()
                 let product = {
                     id:doc.id,
@@ -95,7 +45,7 @@ class ContainerFireStore {
                 console.log(product)
                 return product
             } else {
-                let snapshot = this.carts.doc(id)
+                let snapshot = this.collection.doc(id)
                 let doc = await snapshot.get()
                 let cart = {
                     id:doc.id,
@@ -105,7 +55,7 @@ class ContainerFireStore {
                 return cart
             }
         } catch (error) {
-            if (collection == 'products') {
+            if (this.collName === 'products' && collection === 'products') {
                 console.log(`No se pudo obtener el producto ${error}`);
             } else {
                 console.log(`No se pudo obtener el carrito ${error}`);
@@ -116,15 +66,15 @@ class ContainerFireStore {
 
     async save(collection, product){
         try {
-            if (collection == 'products') {
-                let products = await this.products.add(product)
+            if (this.collName === 'products' && collection === 'products') {
+                let products = await this.collection.add(product)
                 return products
             } else {
-                let carts = await this.carts.add(product)
+                let carts = await this.collection.add(product)
                 return carts
             }
         } catch (error) {
-            if (collection == 'products') {
+            if (this.collName === 'products' && collection === 'products') {
                 console.log(`Error al guardar el producto ${error}`);
             } else {
                 console.log(`Error al guardar el carrito ${error}`);
@@ -135,8 +85,8 @@ class ContainerFireStore {
 
     async update(collection,id,product){
         try {
-            if (collection == 'products') {
-                const newProducts = await products.doc(id).update({
+            if (this.collName === 'products' && collection === 'products') {
+                const newProducts = await this.collection.doc(id).update({
                     date:product.date,
                     name:product.name,
                     description:product.description,
@@ -147,11 +97,11 @@ class ContainerFireStore {
                 })
                 return newProducts
             } else {
-                const newCart = await carts.doc(id).update({products:product})
+                const newCart = await this.collection.doc(id).update({products:FieldValue.arrayUnion(product)})
                 return newCart
             }
         } catch (error) {
-            if (collection == 'products') {
+            if (this.collName === 'products' && collection === 'products') {
                 console.log(`Error al actualizar el producto ${error}`);
             } else {
                 console.log(`Error al actualizar el carrito ${error}`);
@@ -161,13 +111,31 @@ class ContainerFireStore {
 
     async deleteByID(collection,id){
         try {
-            
+            if (this.collName === 'products' && collection === 'products') {
+                let prod = await this.getByID(collection,id)
+                await this.collection.doc(prod).delete()
+                return prod
+            } else {
+                let cart = await this.getByID(collection,id)
+                await this.collection.doc(cart).delete()
+                return cart
+            }
         } catch (error) {
-            if (collection == 'products') {
+            if (this.collName === 'products' && collection === 'products') {
                 console.log(`Error al eliminar el producto ${error}`);
             } else {
                 console.log(`Error al eliminar el carrito ${error}`);
             }
+        }
+    }
+
+    async deleteProdCart(cartId,prodId){
+        try {
+            let cart = await this.getByID('carts', cartId)
+            let newCart = await cart.update({products:FieldValue.arrayRemove(prodId)})
+            return newCart
+        } catch (error) {
+            console.log(`Error al eliminar el producto del carrito ${error}`);
         }
     }
 }
