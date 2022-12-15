@@ -8,17 +8,8 @@ const {CartDaoFiles} = require('./src/daos/importsDao');
 const {ProductsDaoMongo} = require('./src/daos/importsDao');
 const {CartDaoMongo} = require('./src/daos/importsDao');
 //imports dao FireStore
-const {ProdDaoFireS} = require('./src/daos/products/prodDaoFireS')
-const {CartDaoFireS} = require('./src/daos/cart/cartDaoFireS')
-
-//CONFIGURACION FIREBASE
-const admin = require('firebase-admin');
-const serviceAccount = require('./src/db/desafio-coder-861fd-firebase-adminsdk-evlvg-2c8f0fbe47.json')
-let db = admin.firestore();
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
+const {ProductsDaoFireS} = require('./src/daos/importsDao')
+const {CartDaoFireS} = require('./src/daos/importsDao')
 
 const PORT = process.env.PORT || 8080;
 
@@ -38,8 +29,8 @@ if (process.env.ENV==="MONGO") {
     server.use('/api/productos', prodControllerFS.getRouter());
     server.use('/api/carrito', cartControllerFS.getRouter());
 }else{
-    const prodControllerFireS = new ProdDaoFireS(db);
-    const cartControllerFireS = new CartDaoFireS(db);
+    const prodControllerFireS = new ProductsDaoFireS('products');
+    const cartControllerFireS = new CartDaoFireS('carts');
     server.use('/api/productos', prodControllerFireS.getRouter());
     server.use('/api/carrito', cartControllerFireS.getRouter());
 }
@@ -50,3 +41,4 @@ server.listen(PORT, () => {
 server.on('error', (err) => {
     console.log(`Error en servidor ${err}`)
 });
+

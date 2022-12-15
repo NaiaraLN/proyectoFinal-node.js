@@ -1,32 +1,42 @@
-class ContainerFireStore {
-    constructor(coll,db){
-        this.collName = coll
-        this.collection = db.collection(this.collName)
-    }
+const admin = require('firebase-admin');
+const { ProductsDaoFiles } = require('../daos/importsDao');
+const serviceAccount = require('../db/desafio-coder-861fd-firebase-adminsdk-evlvg-2c8f0fbe47.json')
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://desafio-coder-861fd.firebaseio.com'
+})
+let db = admin.firestore();
+const FieldValue = admin.firestore.FieldValue;
 
+class ContainerFireStore {
+    constructor(coll){
+        this.coll = coll
+        this.collection = db.collection(this.coll)
+    }
     async getAll(collection) {
         try {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products' && this.coll == 'products') {
+                const result = []
                 const snapshot = await this.collection.get();
                 snapshot.forEach((doc) => {
                     let product = {
                         id:doc.id,
                         ...doc.data()
                     }
-                    return product
+                    result.push(product)
                 })
-                return snapshot
+                return result
             } else {
+                const result = []
                 const snapshot = await this.collection.get();
                 snapshot.forEach((doc) => {
                     let cart = {
                         id:doc.id,
                         ...doc.data()
                     }
-                    return cart
+                    result.push(cart)
                 })
-                console.log(snapshot)
-                return snapshot
+                return result
             }
         } catch (error) {
             console.log(`No se obtuvieron los documentos ${error}`)
@@ -35,7 +45,7 @@ class ContainerFireStore {
 
     async getByID(collection,id){
         try {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products' && this.coll == 'products') {
                 const snapshot = this.collection.doc(id)
                 let doc = await snapshot.get()
                 let product = {
@@ -55,7 +65,7 @@ class ContainerFireStore {
                 return cart
             }
         } catch (error) {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products') {
                 console.log(`No se pudo obtener el producto ${error}`);
             } else {
                 console.log(`No se pudo obtener el carrito ${error}`);
@@ -66,7 +76,7 @@ class ContainerFireStore {
 
     async save(collection, product){
         try {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products' && this.coll == 'products') {
                 let products = await this.collection.add(product)
                 return products
             } else {
@@ -74,7 +84,7 @@ class ContainerFireStore {
                 return carts
             }
         } catch (error) {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products') {
                 console.log(`Error al guardar el producto ${error}`);
             } else {
                 console.log(`Error al guardar el carrito ${error}`);
@@ -85,8 +95,9 @@ class ContainerFireStore {
 
     async update(collection,id,product){
         try {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products' && this.coll == 'products') {
                 const newProducts = await this.collection.doc(id).update({
+                    id:product.id,
                     date:product.date,
                     name:product.name,
                     description:product.description,
@@ -101,7 +112,7 @@ class ContainerFireStore {
                 return newCart
             }
         } catch (error) {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products') {
                 console.log(`Error al actualizar el producto ${error}`);
             } else {
                 console.log(`Error al actualizar el carrito ${error}`);
@@ -111,17 +122,15 @@ class ContainerFireStore {
 
     async deleteByID(collection,id){
         try {
-            if (this.collName === 'products' && collection === 'products') {
-                let prod = await this.getByID(collection,id)
-                await this.collection.doc(prod).delete()
-                return prod
+            if (collection === 'products' && this.coll == 'products') {
+                await this.collection.doc(id).delete()
+                return {status: 'exito', description: 'producto eliminado'}
             } else {
-                let cart = await this.getByID(collection,id)
-                await this.collection.doc(cart).delete()
-                return cart
+                await this.collection.doc(id).delete()
+                return {status: 'exito', description: 'carrito eliminado'}
             }
         } catch (error) {
-            if (this.collName === 'products' && collection === 'products') {
+            if (collection === 'products') {
                 console.log(`Error al eliminar el producto ${error}`);
             } else {
                 console.log(`Error al eliminar el carrito ${error}`);
@@ -132,12 +141,14 @@ class ContainerFireStore {
     async deleteProdCart(cartId,prodId){
         try {
             let cart = await this.getByID('carts', cartId)
-            let newCart = await cart.update({products:FieldValue.arrayRemove(prodId)})
+            cart.products = cart.products.filter((prod) => prod.id !== prodId)
+            let newCart = await this.collection.doc(cartId).update({products:cart.products})
             return newCart
         } catch (error) {
             console.log(`Error al eliminar el producto del carrito ${error}`);
         }
     }
 }
+
 
 module.exports = ContainerFireStore;

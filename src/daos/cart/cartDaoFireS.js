@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const ContainerFireStore = require('../../containers/containerFireStore');
 
+
 class CartDaoFireS extends ContainerFireStore {
     constructor(){
-        super.collName('carts')
-        super.collection(db)
+        super('carts')
         this.cartRouter = Router()
 
         this.cartRouter.get('/', async (req,res) => {
@@ -30,18 +30,17 @@ class CartDaoFireS extends ContainerFireStore {
             try {
                 let cart ={
                     date: Date.now(),
-                    products: [
-                        {   
-                            id: req.body.id,
-                            date: Date.now(),
-                            name: req.body.name,
-                            description:req.body.description,
-                            code:req.body.code,
-                            thumbnail:req.body.thumbnail,
-                            price:req.body.price,
-                            stock:req.body.stock
-                        }
-                    ]
+                    products:[
+                        {
+                        id:req.body.id,
+                        date: Date.now(),
+                        name: req.body.name,
+                        description:req.body.description,
+                        code:req.body.code,
+                        thumbnail:req.body.thumbnail,
+                        price:req.body.price,
+                        stock:req.body.stock
+                    }]
                 }
                 await super.save('carts', cart)
                 let carts = await super.getAll('carts')
@@ -51,17 +50,18 @@ class CartDaoFireS extends ContainerFireStore {
             }
         })
 
-        this.cartRouter.post('/:id/productos/', async (req,res) => {
+        this.cartRouter.post('/:id/productos', async (req,res) => {
             try {
                 let product = {
                     id: req.body.id,
-                    date: Date.now(),
-                    name: req.body.name,
-                    description:req.body.description,
-                    code:req.body.code,
-                    thumbnail:req.body.thumbnail,
-                    price:req.body.price,
-                    stock:req.body.stock
+                        date: Date.now(),
+                        name: req.body.name,
+                        description:req.body.description,
+                        code:req.body.code,
+                        thumbnail:req.body.thumbnail,
+                        price:req.body.price,
+                        stock:req.body.stock
+                    
                 }
                 let id = req.params.id;
                 let newCart = await super.update('carts',id,product)

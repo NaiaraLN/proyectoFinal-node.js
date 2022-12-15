@@ -2,9 +2,8 @@ const { Router } = require('express');
 const ContainerFireStore = require('../../containers/containerFireStore');
 
 class ProdDaoFireS extends ContainerFireStore{
-    constructor(db){
-        super.collName('products')
-        super.collection(db)
+    constructor(){
+        super('products')
         this.productsRouter = Router()
 
         this.productsRouter.get('/', async (req, res) => {
