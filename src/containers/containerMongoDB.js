@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {productModel} = require('../model/productsModel')
 const cartModel = require('../model/cartModel')
+const userModel = require("../model/userModel");
 
 mongoose.set("strictQuery", false);
 
@@ -40,6 +41,25 @@ class ContainerMongoDB {
             }
         } catch (error) {
             console.log(`No se pudo obtener el producto ${error}`);
+        }
+        
+    }
+    async getUser(username){
+        try {
+            const user = await userModel.findOne({username})
+            return user
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async saveUser(newUser){
+        try {
+            const newuser = new userModel(newUser)
+            await newuser.save()
+            const username = newUser.username
+            return username
+        } catch (error) {
+            console.log(`error al guardar el usuario ${error}`)
         }
         
     }

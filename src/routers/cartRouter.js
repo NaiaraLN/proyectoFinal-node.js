@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const {cartDao} = require('../daos/importsDao')
+const {cartDao} = require('../daos/importsDao');
+const {userDB} = require('../daos/importsDao')
 
 const cartRouter = Router();
 cartRouter.get('/', async (req, res) => {
@@ -66,6 +67,24 @@ cartRouter.post('/:id/productos', async (req, res) => {
         return res.send({error: `no se pudo agregar el producto ${err}`})
     }
     
+})
+
+cartRouter.post("/:id/checkout", async (req,res) => {
+    const cartId = req.params.id;
+    const username = req.user.username;
+    const user = userDB.getUser(username);
+    let cart = await cartDao.getByID('carts',cartId)
+    const order = {
+        user:{...user},
+        cart:{...cart}
+    }
+    const newOrder = {
+        user,
+        cart
+    }
+    console.log(order)
+    console.log(newOrder)
+    res.json(order)
 })
 
 cartRouter.delete("/:id", async (req, res) => {

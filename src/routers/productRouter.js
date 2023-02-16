@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const {productsDao} = require('../daos/importsDao')
+const {isAdmin} = require("../scripts/passport");
 
 const productsRouter = Router()
 
@@ -22,7 +23,7 @@ productsRouter.get('/:id', async (req, res) => {
     }
 });
 
-productsRouter.post('/', async (req, res) => {
+productsRouter.post('/', isAdmin, async (req, res) => {
     try {
         const product = {
             date: Date.now(),
@@ -41,7 +42,7 @@ productsRouter.post('/', async (req, res) => {
     }
 });
 
-productsRouter.put('/:id', async (req, res) => {
+productsRouter.put('/:id', isAdmin, async (req, res) => {
     try {
         let id = req.params.id
         let product = {
@@ -61,7 +62,7 @@ productsRouter.put('/:id', async (req, res) => {
     }
 });
 
-productsRouter.delete("/:id", async (req, res) => {
+productsRouter.delete("/:id", isAdmin, async (req, res) => {
     try {
         let id = req.params.id;
         let delProd = await productsDao.deleteByID('products',id)
