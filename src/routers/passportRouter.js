@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {isAuth} = require("../controllers/passport")
+const {isAuth} = require("../middleware/passport")
 const passport = require("passport")
 const {userDB} = require('../daos/importsDao')
 const multer = require("multer");
