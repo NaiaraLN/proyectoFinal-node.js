@@ -1,10 +1,9 @@
 const {ADMIN_MAIL, ADMIN_PASS} = require('../config')
 const nodemailer = require('nodemailer')
 const Mailgen = require('mailgen')
-
+const logger = require("../scripts/logger")
 
 const signup = async (user) => {
-    console.log(user)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
@@ -42,22 +41,21 @@ const signup = async (user) => {
     const message = {
         from: ADMIN_MAIL,
         to: ADMIN_MAIL,
-        subject: 'Nuevo usuario registrado',
+        subject: 'Nuevo Registro',
         html: mail
     }
     try {
         const info = await transporter.sendMail(message)
-        return ({ 
+        return({ 
             message: 'Email sent successfully... ',
             preview: nodemailer.getTestMessageUrl(info)
         })
     } catch (error) {
-        return({ message: 'Error! ' })
+        logger.error(`Error al enviar mail de nuevo registro ${error}`)
     }
 }
 
-const getbill = async (id) => {
-    let order;
+const getOrder = async (order) => {
     let cart = order.cart
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -76,27 +74,32 @@ const getbill = async (id) => {
         }
     })
 
+    let products = cart.products.map(({name, description,code,price}) => {
+        return {
+            item:name,
+            description:description,
+            code:code,
+            price:price
+        }
+    })
     let response = {
         body: {
             intro: "Nueva orden de compra",
-            table: {
-                data: [
-                    {
-                        idOrder:order._id.toString(),
-                        user:order.username,
-                        mail:order.mail,
-                        age:order.age
-                    },
-                    cart.products.map(({name, description, code, price}) => {
-                        return {
-                            item: name,
-                            description: description,
-                            code: code,
-                            price: price
+            table: [
+                {
+                    data: [
+                        {
+                            idOrder:order._id.toString(),
+                            user:order.user.username,
+                            mail:order.user.mail,
+                            age:order.user.age
                         }
-                    })
-                ]
-            },
+                    ]
+                },
+                {
+                    data: products
+                }
+        ],
             outro: "Orden guardada en la base de datos"
         }
     }
@@ -106,22 +109,22 @@ const getbill = async (id) => {
     const mailOptions = {
         from: ADMIN_MAIL,
         to: ADMIN_MAIL,
-        subject: 'La factura de tu compra',
+        subject: 'Nueva orden de pedido',
         html: mail
     }
     
     try {
         const info = await transporter.sendMail(mailOptions)
         return({ 
-            message: 'Getbill successfully... ',
+            message: 'Get order successfully... ',
             preview: nodemailer.getTestMessageUrl(info)
         })
     } catch (error) {
-        return({ message: 'Error' })
+        logger.error(`Error al enviar mail de orden de pedido ${error}`)
     }
     
 }
 
 module.exports = {
-    signup, getbill
+    signup, getOrder
 }

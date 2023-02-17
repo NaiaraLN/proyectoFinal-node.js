@@ -11,6 +11,7 @@ const {port, mode} = require('./yargs-config')
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const logger = require("./scripts/logger")
 
 
 const app = express();
@@ -47,11 +48,16 @@ app.use('/api/productos', productsRouter);
 app.use('/api/carrito', cartRouter);
 app.use('/', passportRouter);
 
+app.all('*', (req, res) => {
+    const { url, method } = req
+    logger.warn(`Ruta ${method} ${url} no implementada`)
+    res.send(`Ruta ${method} ${url} no está implementada`)
+})
+
 const modoCluster = mode === 'CLUSTER'
 if (modoCluster && cluster.isPrimary) {
     const numCPUs = os.cpus().length;
-    console.log(numCPUs)
-    console.log(`PID Primario ${process.pid}`);
+    logger.info(`PID Primario ${process.pid}`);
     
     for (let i = 0; i < numCPUs; i++) {
         cluster.fork();
@@ -59,15 +65,15 @@ if (modoCluster && cluster.isPrimary) {
     }
 
     cluster.on('exit', worker => {
-        console.log('worker', worker.process.pid, 'died', new Date().toLocaleString())
+        logger.info('worker', worker.process.pid, 'died', new Date().toLocaleString())
         cluster.fork()
     })
 
 }else{
 
     const server = app.listen(port, () => {
-        console.log(`Servidor escuchando en el puerto ${server.address().port} - pid worker ${process.pid}`)
+        logger.info(`Servidor escuchando en el puerto ${server.address().port} - pid worker ${process.pid}`)
     })
-    server.on('error', error => console.log(`Error en servidor ${error}`))
+    server.on('error', error => logger.error(`Error en servidor ${error}`))
 }
 

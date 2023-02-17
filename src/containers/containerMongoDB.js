@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const {productModel} = require('../model/productsModel')
-const cartModel = require('../model/cartModel')
-const userModel = require("../model/userModel");
+const {cartModel} = require('../model/cartModel')
+const {userModel} = require("../model/userModel");
+const orderModel = require("../model/orderModel")
+const logger = require("../scripts/logger")
 
 mongoose.set("strictQuery", false);
 
@@ -25,7 +27,11 @@ class ContainerMongoDB {
                 return allCarts
             }
         } catch (error) {
-            console.log(`No se obtuvieron los productos ${error}`);
+            if (collection == 'products') {
+                logger.error(`Error al obtener los productos ${error}`)
+            } else {
+                logger.error(`Error al obtener los carritos ${error}`)
+            }
         }
     }
 
@@ -35,12 +41,21 @@ class ContainerMongoDB {
             if (collection == 'products') {
                 let product = await productModel.findById({_id:objId})
                 return product
-            } else {
-                let cart = await cartModel.findById({_id:objId},{products:1})
+            } else if(collection == 'carts'){
+                let cart = await cartModel.findById({_id:objId},{products:1, date:1})
                 return cart
+            }else{
+                let order = await orderModel.findById({_id:objId})
+                return order
             }
         } catch (error) {
-            console.log(`No se pudo obtener el producto ${error}`);
+            if (collection == 'products') {
+                logger.error(`Error al obtener el producto ${error}`)
+            } else if(collection == 'carts'){
+                logger.error(`Error al obtener el carrito ${error}`)
+            }else{
+                logger.error(`Error al obtener la orden ${error}`)
+            }
         }
         
     }
@@ -49,7 +64,7 @@ class ContainerMongoDB {
             const user = await userModel.findOne({username})
             return user
         } catch (error) {
-            console.log(error)
+            logger.error(`Error al obtener al usuario ${error}`)
         }
     }
     async saveUser(newUser){
@@ -59,7 +74,7 @@ class ContainerMongoDB {
             const username = newUser.username
             return username
         } catch (error) {
-            console.log(`error al guardar el usuario ${error}`)
+            logger.error(`error al guardar el usuario ${error}`)
         }
         
     }
@@ -69,13 +84,24 @@ class ContainerMongoDB {
                 let newProduct = new productModel(product)
                 let saveProduct = await newProduct.save()
                 return saveProduct
-            } else {
+            } else if(collection == 'carts') {
                 let newCart = new cartModel(product)
                 let saveCart = await newCart.save()
                 return saveCart
+            }else{
+                let newOrder = new orderModel(product)
+                let saveOrder = await newOrder.save()
+                return saveOrder
             }
         } catch (error) {
-            console.log(`Error al guardar el producto ${error}`);
+            if (collection == 'products') {
+                logger.error(`Error al guardar el producto ${error}`);
+            } else if(collection == 'carts'){
+                logger.error(`Error al guardar el carrito ${error}`)
+            }else{
+                logger.error(`Error al guardar la orden ${error}`)
+            }
+            
         }
         
     }
@@ -104,7 +130,12 @@ class ContainerMongoDB {
                 return newCart
             }
         } catch (error) {
-            console.log(`Error al actualizar producto${error}`);
+            if (collection == 'products') {
+                logger.error(`Error al actualizar el producto ${error}`);
+            } else {
+                logger.error(`Error al actualizar el carrito ${error}`)
+            }
+            
         }
     }
     async deleteByID(collection,id){
@@ -118,7 +149,12 @@ class ContainerMongoDB {
                 return cart
             }
         } catch (error) {
-            console.log(`Error al eliminar producto${error}`);
+            if (collection == 'products') {
+                logger.error(`Error al eliminar el producto ${error}`);
+            }else{
+                logger.error(`Error al eliminar el carrito ${error}`)
+            }
+            
         }
     }
     async deleteProdCart(cartId,prodId, cart) {
@@ -128,11 +164,9 @@ class ContainerMongoDB {
             if (prod) {
                 let newCart = await cartModel.updateOne({_id:objId}, {$pull:{products:prod}})
                 return newCart
-            } else {
-                console.log('No se encontró el producto para eliminarlo')
             }
         } catch (error) {
-            console.log(`Error al eliminar el producto del carrito ${error}`)
+            logger.error(`Error al eliminar el producto del carrito ${error}`)
         }
     }
 

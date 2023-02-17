@@ -1,6 +1,6 @@
 const {MONGO_USER, MONGO_PASS} = require("../../config")
 const ContainerMongoDB = require("../../containers/containerMongoDB");
-const userModel = require("../../model/userModel");
+const {userModel} = require("../../model/userModel");
 
 class User extends ContainerMongoDB{
     constructor(){

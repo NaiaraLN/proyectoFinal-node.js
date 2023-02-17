@@ -1,32 +1,70 @@
 const { Router } = require('express');
 const {cartDao} = require('../daos/importsDao');
-const {userDB} = require('../daos/importsDao')
+const {userDB} = require('../daos/importsDao');
+const {orderDao} = require('../daos/importsDao')
+const {getOrder} = require('../services/nodemailer')
+const {WHS, SMS} = require('../services/twilio')
+const {isAuth} = require("../controllers/passport")
+const logger = require('../scripts/logger')
 
 const cartRouter = Router();
-cartRouter.get('/', async (req, res) => {
+cartRouter.get('/', isAuth ,async (req, res) => {
     try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
         let allCarts = await cartDao.getAll('carts')
-        return res.json(allCarts)
+        res.json(allCarts)
     } catch (error) {
-        return res.send({error: `hubo un error al traer los carritos ${err}`})
+        logger.error(`Error al traer el carrito ${error}`)
+        res.send({error: `hubo un error al traer los carritos ${error}`})
     }
 });
 
-cartRouter.get('/:id/productos', async (req, res) => {
-    let id = req.params.id;
+cartRouter.get('/:id/productos', isAuth ,async (req, res) => {
     try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        let id = req.params.id;
         let cart = await cartDao.getByID('carts',id)
-        return res.json(cart)
+        res.json(cart)
     } catch (error) {
-        return res.send({error : `Carrito no encontrado ${err}`})
+        logger.error(`Error: carrito no encontrado ${error}`)
+        res.send({error : `Carrito no encontrado ${error}`})
     }
 
 });
 
-cartRouter.post('/', async (req, res) => {
-    let cart = {
-        date: Date.now(),
-        products: {
+cartRouter.post('/',isAuth , async (req, res) => {
+    try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        let cart = {
+            date: Date.now(),
+            products: {
+                _id: req.body._id,
+                date: Date.now(),
+                name: req.body.name,
+                description:req.body.description,
+                code:req.body.code,
+                thumbnail:req.body.thumbnail,
+                price:req.body.price,
+                stock:req.body.stock
+            }
+        }
+        await cartDao.save('carts',cart)
+        let carts = await cartDao.getAll('carts')
+        res.json(carts)
+    } catch (error) {
+        logger.error(`No se pudo guardar el producto ${error}`)
+        res.send({error : `No se pudo guardar el producto ${error}`})
+    }
+});
+
+cartRouter.post('/:id/productos', isAuth ,async (req, res) => {
+    try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        let product = {
             _id: req.body._id,
             date: Date.now(),
             name: req.body.name,
@@ -36,76 +74,70 @@ cartRouter.post('/', async (req, res) => {
             price:req.body.price,
             stock:req.body.stock
         }
-    }
-    try {
-        await cartDao.save('carts',cart)
-        let carts = await cartDao.getAll('carts')
-        return res.json(carts)
-    } catch (error) {
-        return res.send({error : `No se pudo guardar el producto ${err}`})
-    }
-});
-
-cartRouter.post('/:id/productos', async (req, res) => {
-    let product = {
-        _id: req.body._id,
-        date: Date.now(),
-        name: req.body.name,
-        description:req.body.description,
-        code:req.body.code,
-        thumbnail:req.body.thumbnail,
-        price:req.body.price,
-        stock:req.body.stock
-    }
-    let id = req.params.id;
-    try {
+        let id = req.params.id;
         let cart = await cartDao.getByID('carts',id)
         cart.products.push(product)
         let newCart = await cartDao.update('carts',cart._id,product)
-        return res.json(newCart)
+        res.json(newCart)
     } catch (error) {
-        return res.send({error: `no se pudo agregar el producto ${err}`})
+        logger.error(`no se pudo agregar el producto ${error}`)
+        res.send({error: `no se pudo agregar el producto ${error}`})
     }
     
 })
 
-cartRouter.post("/:id/checkout", async (req,res) => {
-    const cartId = req.params.id;
-    const username = req.user.username;
-    const user = userDB.getUser(username);
-    let cart = await cartDao.getByID('carts',cartId)
-    const order = {
-        user:{...user},
-        cart:{...cart}
+cartRouter.post("/:id/checkout", isAuth ,async (req,res) => {
+    try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        const cartId = req.params.id;
+        const username = req.user.username;
+        const user = await userDB.getUser(username);
+        let cart = await cartDao.getByID('carts',cartId)
+        const newOrder = {
+            user:user,
+            cart:cart
+        }
+        const saveOrder = await orderDao.save('orders', newOrder);
+        const order = await orderDao.getByID('orders', saveOrder._id);
+        await getOrder(order);
+        await WHS(order);
+        await SMS(user);
+        res.json(order)
+    } catch (error) {
+        logger.error(`no se pudo agregar el producto ${error}`)
+        res.send({error: `no se pudo agregar el producto ${error}`})
     }
-    const newOrder = {
-        user,
-        cart
-    }
-    console.log(order)
-    console.log(newOrder)
-    res.json(order)
+    
 })
 
-cartRouter.delete("/:id", async (req, res) => {
-    let id = req.params.id;
+cartRouter.delete("/:id", isAuth ,async (req, res) => {
+    
     try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        let id = req.params.id;
         await cartDao.deleteByID('carts',id)
-        return res.send('carrito eliminado')
+        res.send('carrito eliminado')
     } catch (error) {
-        return res.send({error: `error al eliminar el carrito ${err}`})
+        logger.error(`error al eliminar el carrito ${error}`)
+        res.send({error: `error al eliminar el carrito ${error}`})
     }
 });
 
-cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
-    let cartId = req.params.id;
-    let prodId = req.params.id_prod
+cartRouter.delete('/:id/productos/:id_prod',isAuth , async (req, res) => {
+    
     try {
+        const { url, method } = req
+        logger.info(`Ruta ${method} ${url} implementada`)
+        let cartId = req.params.id;
+        let prodId = req.params.id_prod
         let cart = await cartDao.getByID('carts',cartId)
         await cartDao.deleteProdCart(cartId,prodId,cart)
-        return res.send('producto eliminado del carrito')
+        res.send('producto eliminado del carrito')
     } catch (error) {
-        return res.send({error: `error al eliminar producto del carrito ${err}`})
+        logger.error(`error al eliminar producto del carrito ${error}`)
+        res.send({error: `error al eliminar producto del carrito ${error}`})
     }
 })
 
