@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const {productsDao} = require('../daos/importsDao')
-const {isAdmin} = require("../controllers/passport");
+const {isAdmin} = require("../middleware/isAuth");
 const logger = require('../scripts/logger')
 
 const productsRouter = Router()

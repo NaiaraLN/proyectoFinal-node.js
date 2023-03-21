@@ -1,23 +1,11 @@
 const {Router} = require("express");
-const {isAuth} = require("../middleware/passport")
+const {isAuth} = require("../middleware/isAuth")
 const passport = require("passport")
 const {userDB} = require('../daos/importsDao')
-const multer = require("multer");
-const path = require("path")
 const logger = require('../scripts/logger')
+const upload = require('../middleware/multer')
 
 const passportRouter = Router()
-
-let storage = multer.diskStorage({
-    destination: (_, __, cb) => {
-        cb(null, path.join(__dirname, '../../public', 'img'));
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
-
-const upload = multer({ storage: storage });
 
 passportRouter.get("/", isAuth, (req, res) => {
     const { url, method } = req

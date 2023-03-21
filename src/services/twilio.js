@@ -6,11 +6,12 @@ const client = twilio(TWILIO_SID, TWILIO_TOKEN)
 
 const SMS = async (user) =>{
     try {
-        const message = await client.messages.create({
+        await client.messages.create({
             body: 'Gracias por confiar en Golden Bookshop! Su orden está en proceso.',
             from: '+12185957892',
             to: `+${user.phone}`
         })
+        return {status:'success', description:'Mensaje enviado!'}
     } catch (error) {
         logger.error(`Error al enviar sms al usuario ${error}`)
     }

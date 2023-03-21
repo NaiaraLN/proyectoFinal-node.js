@@ -67,17 +67,6 @@ class ContainerMongoDB {
             logger.error(`Error al obtener al usuario ${error}`)
         }
     }
-    async saveUser(newUser){
-        try {
-            const newuser = new userModel(newUser)
-            await newuser.save()
-            const username = newUser.username
-            return username
-        } catch (error) {
-            logger.error(`error al guardar el usuario ${error}`)
-        }
-        
-    }
     async save(collection,product){
         try {
             if (collection == 'products') {
@@ -88,18 +77,24 @@ class ContainerMongoDB {
                 let newCart = new cartModel(product)
                 let saveCart = await newCart.save()
                 return saveCart
-            }else{
+            }else if(collection == 'orders'){
                 let newOrder = new orderModel(product)
                 let saveOrder = await newOrder.save()
                 return saveOrder
+            }else{
+                const newuser = new userModel(newUser)
+                let saveUser = await newuser.save()
+                return saveUser
             }
         } catch (error) {
             if (collection == 'products') {
                 logger.error(`Error al guardar el producto ${error}`);
             } else if(collection == 'carts'){
                 logger.error(`Error al guardar el carrito ${error}`)
-            }else{
+            }else if(collection == 'orders'){
                 logger.error(`Error al guardar la orden ${error}`)
+            }else{
+                logger.error(`error al guardar el usuario ${error}`)
             }
             
         }

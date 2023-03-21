@@ -3,7 +3,7 @@ const {Strategy: LocalStrategy} = require('passport-local');
 const {userDB} = require('../daos/importsDao');
 const bCrypt = require('bcrypt');
 const {signup} = require("../services/nodemailer")
-const logger = require('../scripts/logger')
+const logger = require('./logger')
 
 /* -------------PASSPORT-------------- */
 passport.use('register', new LocalStrategy({
@@ -25,7 +25,7 @@ passport.use('register', new LocalStrategy({
             phone: phone,
             avatar: file
         }
-        await userDB.saveUser(newUser)
+        await userDB.save('users',newUser)
         const user = await userDB.getUser(username)
         await signup(user)
         return done(null, user)
@@ -68,24 +68,3 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     userDB.model.findById(id, done);
 });
-
-/* ---AUTH--- */
-function isAuth(req, res, next) {
-    if (req.isAuthenticated()) {
-        next()
-    } else {
-        res.redirect('/login')
-    }
-}
-
-/* --isAdmin-- */
-async function isAdmin(req,res,next){
-    const user = await userDB.getUser(req.user.username);
-    if(user.username === "admin"){
-        next()
-    }else{
-        res.send(null)
-    }
-}
-
-module.exports = {isAuth, isAdmin};

@@ -43,6 +43,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req,res,next) => {
+    const { url, method } = req
+    logger.info(`Ruta ${method} ${url} implementada`)
+    next()
+})
 
 app.use('/api/productos', productsRouter);
 app.use('/api/carrito', cartRouter);

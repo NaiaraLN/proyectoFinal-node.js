@@ -4,7 +4,7 @@ const {userDB} = require('../daos/importsDao');
 const {orderDao} = require('../daos/importsDao')
 const {getOrder} = require('../services/nodemailer')
 const {WHS, SMS} = require('../services/twilio')
-const {isAuth} = require("../controllers/passport")
+const {isAuth} = require("../middleware/isAuth")
 const logger = require('../scripts/logger')
 
 const cartRouter = Router();
