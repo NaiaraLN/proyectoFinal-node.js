@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const {userSchema} = require("./userModel")
-const {cartSchema} = require("./cartModel")
+import mongoose from "mongoose";
+import {userSchema} from "./userModel"
+import {cartSchema} from "./cartModel"
 
 const orderSchema = new mongoose.Schema({
     user:userSchema,
@@ -8,4 +8,4 @@ const orderSchema = new mongoose.Schema({
 })
 
 const orderModel = mongoose.model('orders', orderSchema)
-module.exports = orderModel;
+export default orderModel;

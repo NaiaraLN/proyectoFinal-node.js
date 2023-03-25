@@ -1,5 +1,3 @@
-const {userDB} = require('../daos/importsDao');
-
 /* ---AUTH--- */
 function isAuth(req, res, next) {
     if (req.isAuthenticated()) {
@@ -11,12 +9,11 @@ function isAuth(req, res, next) {
 
 /* --isAdmin-- */
 async function isAdmin(req,res,next){
-    const user = await userDB.getUser(req.user.username);
-    if(user.username === "admin"){
+    if(req.user?.username === "admin"){
         next()
     }else{
         res.send(null)
     }
 }
 
-module.exports = {isAuth, isAdmin};
+export {isAuth, isAdmin};

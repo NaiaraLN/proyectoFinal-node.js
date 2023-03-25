@@ -1,11 +1,12 @@
-const { Router } = require('express');
-const {cartDao} = require('../daos/importsDao');
-const {userDB} = require('../daos/importsDao');
-const {orderDao} = require('../daos/importsDao')
-const {getOrder} = require('../services/nodemailer')
-const {WHS, SMS} = require('../services/twilio')
-const {isAuth} = require("../middleware/isAuth")
-const logger = require('../scripts/logger')
+import { Router } from 'express';
+import {cartDao} from '../daos/importsDao';
+import {userDB} from '../daos/importsDao';
+import {orderDao} from '../daos/importsDao';
+import {getOrder} from '../services/nodemailer';
+import {WHS, SMS} from '../services/twilio';
+import {isAuth} from '../middleware/isAuth';
+import logger from '../scripts/logger';
+
 
 const cartRouter = Router();
 cartRouter.get('/', isAuth ,async (req, res) => {
@@ -141,4 +142,4 @@ cartRouter.delete('/:id/productos/:id_prod',isAuth , async (req, res) => {
     }
 })
 
-module.exports = {cartRouter};
+export {cartRouter};

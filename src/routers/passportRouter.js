@@ -1,9 +1,9 @@
-const {Router} = require("express");
-const {isAuth} = require("../middleware/isAuth")
-const passport = require("passport")
-const {userDB} = require('../daos/importsDao')
-const logger = require('../scripts/logger')
-const upload = require('../middleware/multer')
+import {Router} from 'express';
+import {isAuth} from '../middleware/isAuth'
+import passport from 'passport'
+import {userDB} from '../daos/importsDao'
+import logger from '../scripts/logger'
+import upload from '../middleware/multer'
 
 const passportRouter = Router()
 
@@ -64,4 +64,4 @@ passportRouter.get('/logout', (req, res) =>{
     });
 })
 
-module.exports = passportRouter
+export default passportRouter

@@ -1,7 +1,7 @@
-const {Router} = require('express')
-const {productsDao} = require('../daos/importsDao')
-const {isAdmin} = require("../middleware/isAuth");
-const logger = require('../scripts/logger')
+import {Router} from 'express'
+import {productsDao} from '../daos/importsDao'
+import {isAdmin} from "../middleware/isAuth";
+import logger from '../scripts/logger'
 
 const productsRouter = Router()
 
@@ -84,4 +84,4 @@ productsRouter.delete("/:id", isAdmin, async (req, res) => {
     
 });
 
-module.exports ={ productsRouter};
+export { productsRouter};

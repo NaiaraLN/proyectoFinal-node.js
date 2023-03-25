@@ -1,16 +1,14 @@
-const ProductsDaoMongo = require('./products/prodDaoMongo')
-const CartDaoMongo = require('./cart/cartDaoMongo')
-const User = require("./users/users")
-const Orders = require("./orders/ordersDao")
-/* 
-const productsDao = new ProductsDaoMongo();
-const cartDao = new CartDaoMongo();
+import ProductsDaoMongo from './products/prodDaoMongo'
+import CartDaoMongo from './cart/cartDaoMongo'
+import User from "./users/users"
+import Orders from "./orders/ordersDao"
+
 const userDB = new User()
 const orderDao = new Orders()
- */
-module.exports = {
+
+export {
     ProductsDaoMongo,
     CartDaoMongo,
-    User,
-    Orders
+    userDB,
+    orderDao 
 }

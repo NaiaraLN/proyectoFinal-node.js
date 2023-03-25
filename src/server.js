@@ -1,17 +1,17 @@
-const {MONGO_USER, MONGO_PASS} = require("./config")
-const express = require('express');
-const handlebars = require("express-handlebars");
-const path = require("path")
-const {productsRouter} = require('./routers/productRouter');
-const {cartRouter} = require('./routers/cartRouter');
-const passportRouter = require('./routers/passportRouter')
-const cluster = require('cluster');
-const os = require('os')
-const {port, mode} = require('./yargs-config')
-const passport = require("passport");
-const MongoStore = require("connect-mongo");
-const session = require("express-session");
-const logger = require("./scripts/logger")
+import {MONGO_USER, MONGO_PASS} from "./config.js";
+import express from 'express'
+import handlebars from "express-handlebars";
+import path from "path";
+import {productsRouter} from './routers/productRouter';
+import {cartRouter} from './routers/cartRouter';
+import passportRouter from './routers/passportRouter';
+import cluster from 'cluster';
+import os from 'os';
+import {port, mode} from './config'
+import passport from "passport";
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import logger from "./scripts/logger";
 
 
 const app = express();

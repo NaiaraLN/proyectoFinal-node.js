@@ -1,7 +1,7 @@
-const {ADMIN_MAIL, ADMIN_PASS} = require('../config')
-const nodemailer = require('nodemailer')
-const Mailgen = require('mailgen')
-const logger = require("../scripts/logger")
+import {ADMIN_MAIL, ADMIN_PASS} from '../config'
+import nodemailer from 'nodemailer'
+import Mailgen from 'mailgen'
+import logger from "../scripts/logger"
 
 const signup = async (user) => {
     const transporter = nodemailer.createTransport({
@@ -125,6 +125,6 @@ const getOrder = async (order) => {
     
 }
 
-module.exports = {
+export {
     signup, getOrder
 }

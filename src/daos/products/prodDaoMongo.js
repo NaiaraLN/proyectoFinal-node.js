@@ -1,5 +1,5 @@
-const ContainerMongoDB = require('../../containers/containerMongoDB');
-const {MONGO_USER, MONGO_PASS} = require('../../config')
+import ContainerMongoDB from '../../containers/containerMongoDB';
+import {MONGO_USER, MONGO_PASS} from '../../config'
 
 class ProductsDaoMongo extends ContainerMongoDB{
     constructor(){
@@ -9,4 +9,4 @@ class ProductsDaoMongo extends ContainerMongoDB{
     
 }
 
-module.exports = ProductsDaoMongo;
+export default ProductsDaoMongo;

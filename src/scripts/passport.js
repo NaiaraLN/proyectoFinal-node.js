@@ -1,9 +1,9 @@
-const passport = require("passport");
-const {Strategy: LocalStrategy} = require('passport-local');
-const {userDB} = require('../daos/importsDao');
-const bCrypt = require('bcrypt');
-const {signup} = require("../services/nodemailer")
-const logger = require('./logger')
+import passport from "passport";
+import {Strategy as LocalStrategy} from 'passport-local';
+import {userDB} from '../daos/importsDao';
+import bCrypt from 'bcrypt';
+import {signup} from "../services/nodemailer"
+import logger from './logger'
 
 /* -------------PASSPORT-------------- */
 passport.use('register', new LocalStrategy({
@@ -68,3 +68,5 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     userDB.model.findById(id, done);
 });
+
+export default passport

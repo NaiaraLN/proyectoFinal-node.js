@@ -1,15 +1,16 @@
-const twilio = require("twilio")
-const {TWILIO_SID, TWILIO_TOKEN, ADMIN_NUMBER} = require("../config")
-const logger = require("../scripts/logger")
+import twilio from "twilio"
+import {TWILIO_SID, TWILIO_TOKEN, ADMIN_NUMBER} from "../config"
+import logger from "../scripts/logger"
+
 
 const client = twilio(TWILIO_SID, TWILIO_TOKEN)
 
-const SMS = async (user) =>{
+const SMS = async (userPhone) =>{
     try {
         await client.messages.create({
             body: 'Gracias por confiar en Golden Bookshop! Su orden está en proceso.',
             from: '+12185957892',
-            to: `+${user.phone}`
+            to: `+${userPhone}`
         })
         return {status:'success', description:'Mensaje enviado!'}
     } catch (error) {
@@ -34,4 +35,4 @@ const WHS = async (order) => {
     }
 }
 
-module.exports = {SMS, WHS}
+export {SMS, WHS}

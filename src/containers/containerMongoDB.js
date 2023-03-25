@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const {productModel} = require('../model/productsModel')
-const {cartModel} = require('../model/cartModel')
-const {userModel} = require("../model/userModel");
-const orderModel = require("../model/orderModel")
-const logger = require("../scripts/logger")
+import mongoose from 'mongoose';
+import {productModel} from '../model/productsModel'
+import {cartModel} from '../model/cartModel'
+import {userModel} from "../model/userModel";
+import orderModel from "../model/orderModel"
+import logger from "../scripts/logger"
 
 mongoose.set("strictQuery", false);
 
@@ -170,5 +170,5 @@ class ContainerMongoDB {
     }
 }
 
-module.exports = ContainerMongoDB;
+export default ContainerMongoDB;
 

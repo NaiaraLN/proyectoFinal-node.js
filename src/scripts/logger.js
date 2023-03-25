@@ -1,4 +1,4 @@
-const winston = require('winston')
+import winston from 'winston'
 
 function buildLogger() {
     const Logger = winston.createLogger({
@@ -13,4 +13,4 @@ function buildLogger() {
 
 let logger = buildLogger()
 
-module.exports = logger
+export default logger
