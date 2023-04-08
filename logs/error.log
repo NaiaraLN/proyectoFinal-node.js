@@ -1,1 +1,42 @@
 {"level":"error","message":"hubo un error al traer los productos ReferenceError: req is not defined"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error al obtener al usuario TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: mail: Path `mail` is required., message: Path `message` is required."}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}

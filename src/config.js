@@ -4,8 +4,7 @@ import yargsParse from "yargs/yargs"
 
 const yargs = yargsParse(process.argv.slice(2))
 
-const MONGO_USER = process.env.MONGODB_USER;
-const MONGO_PASS = process.env.MONGODB_PASSWORD;
+const MONGO_URI = process.env.MONGO_URI;
 const ADMIN_MAIL = process.env.ADMIN_MAIL;
 const ADMIN_PASS = process.env.ADMIN_PASS;
 const ADMIN_NUMBER =process.env.ADMIN_NUMBER;
@@ -26,8 +25,7 @@ const {port, mode} = yargs
     
 
 export {
-    MONGO_USER, 
-    MONGO_PASS, 
+    MONGO_URI,
     ADMIN_MAIL, 
     ADMIN_PASS,
     ADMIN_NUMBER,

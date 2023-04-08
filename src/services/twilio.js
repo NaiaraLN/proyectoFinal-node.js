@@ -1,6 +1,6 @@
 import twilio from "twilio"
-import {TWILIO_SID, TWILIO_TOKEN, ADMIN_NUMBER} from "../config"
-import logger from "../scripts/logger"
+import {TWILIO_SID, TWILIO_TOKEN, ADMIN_NUMBER} from "../config.js"
+import logger from "../scripts/logger.js"
 
 
 const client = twilio(TWILIO_SID, TWILIO_TOKEN)

@@ -1,0 +1,9 @@
+<div class="chat">
+    <button onclick="location.href='/chat/{{email}}'">Mensajes enviados</button>
+    <div id="messages"></div>
+    <form onsubmit='return addMessage(this,{{email}})' class="form">
+        <input type="mail" id="mail" class="form-input" placeholder="mail@mail.com" >
+        <input type="text" id="text" class="form-input" placeholder="Escribir...">
+        <input type="submit" class="btn" value="Enviar">
+    </form>
+</div>

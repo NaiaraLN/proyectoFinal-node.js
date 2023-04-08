@@ -1,7 +1,7 @@
-import {ADMIN_MAIL, ADMIN_PASS} from '../config'
+import {ADMIN_MAIL, ADMIN_PASS} from '../config.js'
 import nodemailer from 'nodemailer'
 import Mailgen from 'mailgen'
-import logger from "../scripts/logger"
+import logger from "../scripts/logger.js"
 
 const signup = async (user) => {
     const transporter = nodemailer.createTransport({

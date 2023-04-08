@@ -1,5 +1,5 @@
 <div >
-    <form action="/register" enctype="multipart/form-data" method="post" >
+    <form onsubmit="return register(this)" enctype="multipart/form-data" >
             <h1>Sign Up</h1>
             <label for="mail">Mail</label>
             <input type="email" name="mail"  placeholder="mail">
@@ -17,6 +17,6 @@
             <input type="file" name="avatar"  placeholder="suba una foto">
             <button type="submit" >Enviar</button>
             
-        </form>
-    {{!-- <button class="btn" onclick="location.href = '/login'">Log in</button> --}}
+    </form>
+    <button class="btn" onclick="location.href = '/login'">Log in</button>
 </div>

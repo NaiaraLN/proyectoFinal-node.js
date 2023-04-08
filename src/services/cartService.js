@@ -1,30 +1,32 @@
-import {CartDaoMongo} from '../daos/importsDao';
-import {orderDao} from '../daos/importsDao';
-import {userDB} from '../daos/importsDao';
-import logger from '../scripts/logger';
+import MongoDao from '../model/mongoDao.js'
+import {getOrder} from './nodemailer.js';
+import {WHS, SMS} from './twilio.js';
+import logger from '../scripts/logger.js';
 
-class CartService extends CartDaoMongo{
-    async getCarts(){
+export default class CartService{
+    async getAllCarts(){
         try {
-            let allCarts = await this.getAll('carts')
+            let allCarts = await MongoDao.getAll('carts')
             return allCarts
         } catch (error) {
             logger.error(`Error al traer el carrito ${error}`)
         }
     }
-    async getProducts(id){
+    async getCart(id){
         try {
-            let cart = await this.getByID('carts',id)
+            let cart = await MongoDao.getByID('carts',id)
             return cart
         } catch (error) {
             logger.error(`Error: carrito no encontrado ${error}`)
         }
     }
-    async postCart({_id,name,description,code,thumbnail,price,stock,quantity},address){
+    async createCart({_id,name,description,code,thumbnail,price,quantity},username){
         try {
+            let user = await MongoDao.getUser(username)
             let cart = {
+                email: user.mail,
                 date: Date.now(),
-                address:address,
+                address:user.address,
                 products: {
                     _id: _id,
                     date: Date.now(),
@@ -33,17 +35,16 @@ class CartService extends CartDaoMongo{
                     code:code,
                     thumbnail:thumbnail,
                     price:price,
-                    stock:stock,
                     quantity:quantity
                 }
             }
-            let saveCart = await this.save('carts',cart)
-            if(saveCart){return {status:'success',description:'El carrito se guardó con éxito'}}
+            let saveCart = await MongoDao.save('carts',cart)
+            if(saveCart){return {status:200,description:'El carrito se guardó con éxito'}}
         } catch (error) {
             logger.error(`No se pudo guardar el producto ${error}`)
         }
     }
-    async postProd({id,_id,name,description,code,thumbnail,price,stock,quantity}){
+    async updateCart(id,{_id,name,description,code,thumbnail,price,stock,quantity}){
         try {
             let product = {
                 _id:_id,
@@ -53,36 +54,45 @@ class CartService extends CartDaoMongo{
                 code:code,
                 thumbnail:thumbnail,
                 price:price,
-                stock:stock,
                 quantity:quantity
             }
-            let cart = await this.getProducts(id)
-            cart.products.push(product)
-            let newCart = await this.update('carts',cart._id,product)
+            let cart = await this.getCart(id)
+            let prods = cart.products.find((prod) => prod._id === product._id)
+            let newCart = [...cart.products]
+            let index = cart.products.indexOf(prods)
+            if (prods) {
+                prods.quantity = prods.quantity + product.quantity
+                // cart.products.push(prods)
+                newCart = await MongoDao.update('carts',cart._id,prods)
+            } else {
+                // cart.products.push(product)
+                newCart = await MongoDao.update('carts',cart._id,product)
+            } 
             return newCart
         } catch (error) {
             logger.error(`no se pudo agregar el producto ${error}`)
         }
         
     }
-    async postOrder(id,username){
-        let cart = await this.getProducts(id)
-        const user = await userDB.getUser(username);
+    async createOrder(id,username){
+        let cart = await this.getCart(id)
+        const user = await MongoDao.getUser('users',username);
         const newOrder = {
             date:Date.now(),
             user:user,
             cart:cart,
-            status:'Generada'
+            status:'Generada',
+            number:1
         }
-        const saveOrder = await orderDao.save('orders', newOrder);
-        const order = await orderDao.getByID('orders', saveOrder._id);
+        const saveOrder = await MongoDao.save('orders', newOrder);
+        const order = await MongoDao.getByID('orders', saveOrder._id);
         await getOrder(order);
         await WHS(order);
         await SMS(user.phone);
     }
     async deleteCart(id){
         try {
-            const cart = await this.deleteByID('carts',id)
+            const cart = await MongoDao.deleteByID('carts',id)
             return cart
         } catch (error) {
             logger.error(`error al eliminar el carrito ${error}`)
@@ -90,8 +100,8 @@ class CartService extends CartDaoMongo{
     }
     async deleteProd(id,prodId){
         try {
-            let cart = await cartDao.getByID('carts',id)
-            let newCart = await cartDao.deleteProdCart(id,prodId,cart)
+            let cart = await MongoDao.getByID('carts',id)
+            let newCart = await MongoDao.deleteProdCart('carts',id,prodId,cart)
             return newCart
         } catch (error) {
             logger.error(`error al eliminar producto del carrito ${error}`)
@@ -99,4 +109,3 @@ class CartService extends CartDaoMongo{
     }
 }
 
-export default new CartService()
