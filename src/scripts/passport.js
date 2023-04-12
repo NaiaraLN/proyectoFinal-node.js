@@ -12,7 +12,7 @@ passport.use('register', new LocalStrategy({
     try {
         const {mail,address,age,phone} = req.body;
         const file = req.file.originalname
-        const userdb = await MongoDao.getUser('users',username)
+        const userdb = await MongoDao.getOne('users',username)
         if (userdb ==! null || userdb ==! undefined) {
             return done('already registered')
         }
@@ -26,7 +26,7 @@ passport.use('register', new LocalStrategy({
             avatar: file
         }
         await MongoDao.save('users',newUser)
-        const user = await MongoDao.getUser('users',username)
+        const user = await MongoDao.getOne('users',username)
         await signup(user)
         return done(null, user)
         
@@ -39,7 +39,7 @@ passport.use('register', new LocalStrategy({
 passport.use('login', new LocalStrategy(async (username,password,done) => {
     try {
         console.log('passport configura login')
-        const user = await MongoDao.getUser('users',username)
+        const user = await MongoDao.getOne('users',username)
         if (!user) {
             return done(null, false)
         }

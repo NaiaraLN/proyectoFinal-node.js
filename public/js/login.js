@@ -20,8 +20,12 @@ async function login(e) {
         const {accessToken} = content;
         if (accessToken) {
             localStorage.setItem("access_token", accessToken);
-            window.location.href = '/'
-            // return false
+            await fetch('/', {
+                method: 'GET',
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('access_token')}`
+                }
+            });
         }
         return false
     } catch (error) {

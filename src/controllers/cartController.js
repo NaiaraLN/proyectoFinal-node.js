@@ -1,40 +1,37 @@
 import CartService from "../services/cartService.js";
 
 class CartController extends CartService{
-    async getAll(_,res){
-        let carts = await this.getAllCarts()
-        res.json(carts)
-    }
     async get(req,res){
-        let id = req.params.id;
-        let cart = await this.getCart(id)
+        let mail = req.user.mail;
+        let cart = await this.getCart(mail)
         res.json(cart)
     }
     async post(req,res){
         let username= req.user.username
-        let cart = await this.createCart(req,body,username)
+        let cart = await this.postCart(req.body,username)
         res.json(cart)
     }
     async put(req,res){
         let id = req.params.id;
-        let cart = await this.updateCart(id,req.body)
+        let mail = req.user.mail;
+        let cart = await this.updateCart(id,req.body, mail)
         res.json(cart)
     }
     async postCheckout(req,res){
-        const cartId = req.params.id;
+        const mail = req.user.mail;
         const username = req.user.username;
-        let order = await this.createOrder(cartId,username)
+        let order = await this.createOrder(mail,username)
         res.json(order)
     }
     async delete(req,res){
-        let id = req.params.id;
-        await this.deleteCart(id)
+        let mail = req.user.mail;
+        await this.deleteCart(mail)
         res.json('carrito eliminado')
     }
     async delProdCart(req,res){
-        let cartId = req.params.id;
-        let prodId = req.params.id_prod
-        let cart = await this.deleteProd(cartId,prodId)
+        let prodId = req.params.id;
+        let mail = req.user.mail;
+        let cart = await this.deleteProd(mail,prodId)
         res.json(cart)
     }
 }

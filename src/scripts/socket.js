@@ -15,11 +15,11 @@ export default class ChatSocket{
         return [...this.messages]
     }
     async sendMessages(socket){
-            /* let mail = socket.user.mail
+            let mail = socket.user.mail;
             let type;
-            socket.user?.username === 'asistente' ? type = 'system' : type = 'user'; */
-            // const messages = await ChatService.getAllMessages()
-            const messages = this.getAll()
+            socket.user?.username === 'admin' ? type = 'system' : type = 'user';
+            const messages = await ChatService.getAllMessages()
+            // const messages = this.getAll()
             socket.emit('messages', messages)
     }
 
@@ -28,7 +28,7 @@ export default class ChatSocket{
                 let mail = message.userMail;
                 /* const user = mongoDao.getUser(mail)
                 let type;
-                user.username === 'asistente' ? type = 'system' : type = 'user';
+                user.username === 'admin' ? type = 'system' : type = 'user';
                 const save = await ChatService.saveMessages(message,type) */
                 this.messages.push(message)
                 /* if (save) {

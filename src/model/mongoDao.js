@@ -27,19 +27,12 @@ class MongoDao {
             [MessagesDao.model]: mongoose.model(MessagesDao.model, MessagesDao.schema)
         }
     }
-    async getAll(collection, mail, type) {
+    async getAll(collection, mail, type, category) {
         try {
-            /* if(collection === 'messages'){
-                let array = await this.models[collection].find({ $or:[{mail:mail}, {type:type},{}]})
-                return array
-            } else{ 
-                let array = await this.models[collection].find({$or:[{mail:mail}, {type:type},{}]})
-                return array
-            } */
-            let array = await this.models[collection].find({$or:[{mail:mail}, {type:type},{}]})
+            let array = await this.models[collection].find({$or:[{mail:mail}, {type:type},{category:category},{}]})
                 return array
         } catch (error) {
-            logger.error(`Error al obtener los datos de la collección ${collection}: ${error}`)
+            logger.error(`Error al obtener los datos de la colección ${collection}: ${error}`)
         }
     }
 
@@ -49,15 +42,21 @@ class MongoDao {
             let obj = await this.models[collection].findById({_id:objId})
             return obj
         } catch (error) {
-            logger.error(`Error al obtener el objeto de la collección ${collection}: ${error}`)
+            logger.error(`Error al obtener el objeto de la colección ${collection}: ${error}`)
         }
     }
-    async getUser(collection,username){
+    async getOne(collection,property){
         try {
-            const user = await this.models[collection].findOne({username})
-            return user
+            if(collection === 'users'){
+                const user = await this.models[collection].findOne({username:property})
+                return user
+            }else{
+                const cart = await this.models[collection].findOne({email:property})
+                return cart
+            }
+            
         } catch (error) {
-            logger.error(`Error al obtener al usuario ${error}`)
+            logger.error(`Error al obtener el objeto de la colección ${collection}: ${error}`)
         }
     }
     async save(collection,object){
@@ -87,24 +86,34 @@ class MongoDao {
                 }})
                 return newProduct
             } else {
-                let newCart = await this.models[collection].updateOne({
-                    _id:objId
-                },{$push:{
-                    'products':product
-                }})
-                return newCart
+                if (product.length) {
+                    let newCart = await this.models[collection].updateOne({
+                        _id:objId
+                    },{$set:{
+                        'products':product
+                    }})
+                    return newCart
+                }else{
+                    let newCart = await this.models[collection].updateOne({
+                        _id:objId
+                    },{$push:{
+                        'products':product
+                    }})
+                    return newCart
+                }
+                
             }
         } catch (error) {
-            logger.error(`Error al actualizar el producto en la collección ${collection}: ${error}`);
+            logger.error(`Error al actualizar el producto en la colección ${collection}: ${error}`);
         }
     }
-    async deleteByID(collection,id){
+    async deleteById(collection,id){
         try {
             let objId = mongoose.Types.ObjectId(id)
             let obj = await this.models[collection].deleteOne({_id:objId})
             return obj
         } catch (error) {
-            logger.error(`Error al eliminar el objecto de la collección ${collection}: ${error}`);
+            logger.error(`Error al eliminar el objecto de la colección ${collection}: ${error}`);
         }
     }
     async deleteProdCart(collection,cartId,prodId, cart) {

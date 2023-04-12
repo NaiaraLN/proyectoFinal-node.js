@@ -354,3 +354,30 @@
 {"level":"error","message":"Error en login de usuario"}
 {"level":"error","message":"Error en login de usuario"}
 {"level":"error","message":"Error en login de usuario"}
+{"level":"warn","message":"Ruta POST /login no implementada"}
+{"level":"error","message":"Error de login TypeError: MongoDao.getUser is not a function"}
+{"level":"warn","message":"Ruta POST /failregister no implementada"}
+{"level":"warn","message":"Ruta POST /faillogin no implementada"}
+{"level":"warn","message":"Ruta POST /faillogin no implementada"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"error","message":"Error en login de usuario"}
+{"level":"warn","message":"Ruta POST / no implementada"}
+{"level":"error","message":"Error al obtener el objeto de la colección admin: TypeError: Cannot read properties of undefined (reading 'findOne')"}
+{"level":"error","message":"No se pudo guardar el producto TypeError: Cannot read properties of undefined (reading 'mail')"}
+{"level":"warn","message":"Ruta PUT /carrito no implementada"}
+{"level":"warn","message":"Ruta POST / no implementada"}
+{"level":"error","message":"Error al actualizar el producto en la colección carts: MongoServerError: E11000 duplicate key error collection: 63ac71d91c1d2c2293a95c4d_secondEcommerce.carts index: products.code_1 dup key: { products.code: 12345 }"}
+{"level":"error","message":"Error al eliminar el producto del carrito TypeError: Cannot read properties of undefined (reading 'find')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: ValidationError: items: Cast to Embedded failed for value \"[\n  {\n    date: 2023-04-10T00:40:21.753Z,\n    name: 'libro 4to de Brandon Sanderson',\n    description: 'Otro libro de fantasía',\n    code: 12345,\n    thumbnail: 'https://images.bajalibros.com/hSe4EeJS_ECKn6-jHqHtxJ4OerE=/fit-in/292x446/filters:fill(f8f8f8):quality(90):format(webp)/d2d6tho5fth6q4.cloudfront.net/extast1672506_218c399b3f8802279a17ea3e8e6c8c4cd84b67ab.jpg',\n    price: 4500,\n    quantity: 5,\n    _id: new ObjectId(\"6433551969d306de9f0a5f81\")\n  }\n]\" (type Array) at path \"items\" because of \"ObjectExpectedError\""}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"warn","message":"Ruta POST / no implementada"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading 'products')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading 'products')"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading 'username')"}
+{"level":"warn","message":"Ruta POST / no implementada"}
+{"level":"error","message":"Error al guardar el objecto en la colección products: MongoServerError: E11000 duplicate key error collection: secondEcommerce.products index: code_1 dup key: { code: 12345 }"}
+{"level":"error","message":"error al eliminar producto TypeError: MongoDao.deleteByID is not a function"}

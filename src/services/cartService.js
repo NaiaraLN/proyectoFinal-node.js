@@ -1,28 +1,32 @@
 import MongoDao from '../model/mongoDao.js'
 import {getOrder} from './nodemailer.js';
-import {WHS, SMS} from './twilio.js';
 import logger from '../scripts/logger.js';
 
 export default class CartService{
-    async getAllCarts(){
+    async getCart(email){
         try {
-            let allCarts = await MongoDao.getAll('carts')
-            return allCarts
-        } catch (error) {
-            logger.error(`Error al traer el carrito ${error}`)
-        }
-    }
-    async getCart(id){
-        try {
-            let cart = await MongoDao.getByID('carts',id)
+            let cart = await MongoDao.getOne('carts',email)
             return cart
         } catch (error) {
             logger.error(`Error: carrito no encontrado ${error}`)
         }
     }
+    async postCart({_id,name,description,code,thumbnail,price,quantity}, username){
+        try {
+            let user = await MongoDao.getOne('users',username)
+            const cart = await MongoDao.getOne('carts', user.mail)
+            if (cart) {
+                return await this.updateCart(_id,{_id,name,description,code,thumbnail,price,quantity},user.mail)
+            }else{
+                return await this.createCart({_id,name,description,code,thumbnail,price,quantity}, username)
+            }
+        } catch (error) {
+            logger.error(`Error: no se pudo crear o actualizar el carrito: ${error}`)
+        }
+    }
     async createCart({_id,name,description,code,thumbnail,price,quantity},username){
         try {
-            let user = await MongoDao.getUser(username)
+            let user = await MongoDao.getOne('users',username)
             let cart = {
                 email: user.mail,
                 date: Date.now(),
@@ -44,8 +48,10 @@ export default class CartService{
             logger.error(`No se pudo guardar el producto ${error}`)
         }
     }
-    async updateCart(id,{_id,name,description,code,thumbnail,price,stock,quantity}){
+    async updateCart(id,{_id,name,description,code,thumbnail,price,quantity},mail){
         try {
+            console.log(id)
+            console.log('HOLAA')
             let product = {
                 _id:_id,
                 date: Date.now(),
@@ -56,52 +62,73 @@ export default class CartService{
                 price:price,
                 quantity:quantity
             }
-            let cart = await this.getCart(id)
-            let prods = cart.products.find((prod) => prod._id === product._id)
-            let newCart = [...cart.products]
-            let index = cart.products.indexOf(prods)
-            if (prods) {
-                prods.quantity = prods.quantity + product.quantity
-                // cart.products.push(prods)
-                newCart = await MongoDao.update('carts',cart._id,prods)
+            let cart = await this.getCart(mail)
+            let prod = cart.products.find((prod) => prod._id.toString() === id)
+            console.log(prod)
+            if (prod) {
+                let products = cart.products
+                let newCart = [...products]
+                let index = cart.products.indexOf(prod)
+                newCart[index].quantity += quantity
+                console.log(`este es el newCart: ${newCart}`)
+                let update = await MongoDao.update('carts', cart._id, newCart)
+                return update
             } else {
-                // cart.products.push(product)
-                newCart = await MongoDao.update('carts',cart._id,product)
+                let update = await MongoDao.update('carts',cart._id,product)
+                return update
             } 
-            return newCart
         } catch (error) {
             logger.error(`no se pudo agregar el producto ${error}`)
         }
         
     }
-    async createOrder(id,username){
-        let cart = await this.getCart(id)
-        const user = await MongoDao.getUser('users',username);
-        const newOrder = {
-            date:Date.now(),
-            user:user,
-            cart:cart,
-            status:'Generada',
-            number:1
-        }
-        const saveOrder = await MongoDao.save('orders', newOrder);
-        const order = await MongoDao.getByID('orders', saveOrder._id);
-        await getOrder(order);
-        await WHS(order);
-        await SMS(user.phone);
-    }
-    async deleteCart(id){
+    async createOrder(mail,username){
         try {
-            const cart = await MongoDao.deleteByID('carts',id)
-            return cart
+            let cart = await this.getCart(mail)
+            const user = await MongoDao.getOne('users',username);
+            let orders = await MongoDao.getAll('orders')
+            if (orders.length > 0) {
+                let lastOrder = orders.reduce((acc, item) => item.id > acc ? acc = item.id : acc, 0)
+                const newOrder = {
+                    date:Date.now(),
+                    email:user.mail,
+                    items:cart.products,
+                    status:'Generada',
+                    number:lastOrder + 1
+                }
+                const saveOrder = await MongoDao.save('orders', newOrder);
+                const order = await MongoDao.getByID('orders', saveOrder._id);
+                return await getOrder(order);
+            }else{
+                const newOrder = {
+                    date:Date.now(),
+                    email:user.mail,
+                    items:cart.products,
+                    status:'Generada',
+                    number:1
+                }
+                const saveOrder = await MongoDao.save('orders', newOrder);
+                const order = await MongoDao.getByID('orders', saveOrder._id);
+                return await getOrder(order);
+            }
+            
+        } catch (error) {
+            logger.error(`error al guardar la orden ${error}`)
+        }
+    }
+    async deleteCart(mail){
+        try {
+            const cart = await this.getCart(mail)
+            const delCart = await MongoDao.deleteById('carts',cart._id)
+            return delCart
         } catch (error) {
             logger.error(`error al eliminar el carrito ${error}`)
         }
     }
-    async deleteProd(id,prodId){
+    async deleteProd(mail,prodId){
         try {
-            let cart = await MongoDao.getByID('carts',id)
-            let newCart = await MongoDao.deleteProdCart('carts',id,prodId,cart)
+            let cart = await this.getCart(mail)
+            let newCart = await MongoDao.deleteProdCart('carts',cart._id,prodId,cart)
             return newCart
         } catch (error) {
             logger.error(`error al eliminar producto del carrito ${error}`)

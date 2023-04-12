@@ -8,9 +8,7 @@ import passportController from '../controllers/passportController.js';
 
 const passportRouter = Router()
 
-passportRouter.get("/", authJwt,passportController.getHome.bind(passportController))
-
-passportRouter.get("/carrito", isAuth,passportController.getCart.bind(passportController))
+passportRouter.get("/", isAuth,passportController.getHome.bind(passportController))
 
 passportRouter.get("/profile/:username", isAuth, passportController.getProfile.bind(passportController))
 
@@ -18,6 +16,7 @@ passportRouter.get("/profile/:username", isAuth, passportController.getProfile.b
 passportRouter.get('/register', passportController.getRegister.bind(passportController))
 passportRouter.post('/register', upload.single("avatar"), passport.authenticate('register', {failureRedirect: '/failregister'}), function(req,res) {
     const accessToken = generateAuthToken(req.user.username)
+    res.cookie = accessToken
     res.json(accessToken)
 })
 
@@ -26,13 +25,15 @@ passportRouter.get('/failregister',passportController.failRegister.bind(passport
 // LOGIN
 passportRouter.get('/login', passportController.getLogin.bind(passportController))
 
-passportRouter.post('/login', passport.authenticate('login'), 
+passportRouter.post('/login', passport.authenticate('login', {failureRedirect: '/faillogin', successRedirect: '/' }))
+
+/* passportRouter.post('/login', passport.authenticate('login'), 
 function(req,res) {
     console.log('llega aca')
     const accessToken = generateAuthToken(req.user.username)
     console.log(accessToken)
     res.json({accessToken})
-})
+}) */
 
 passportRouter.get('/faillogin', passportController.failLogin.bind(passportController))
 

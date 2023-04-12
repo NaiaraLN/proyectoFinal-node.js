@@ -1,1 +1,12 @@
-<p>Welcome {user}</p>
+<div class="products-container">
+    {{#if products.length}}
+        {{#each products}}
+            <div>
+                <h2>{{products.name}}</h2>
+                <div><img src="{{products.thumbnail}}" alt="{{products.name}}"></div>
+                <p>{{products.price}}</p>
+                <button onclick="location.href = '/productos/{{products.id}}'">Ver detalles</button>
+            </div>
+        {{/each}}
+    {{/if}}
+</div>

@@ -1,15 +1,14 @@
 import logger from "../scripts/logger.js";
 import mongoDao from "../model/mongoDao.js";
 import {URL} from 'url'
-import path from "path";
 
-// configuro dirname
-const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
 
 class PassportController{
     getHome(req,res){
         const user = req.user.username
-        res.render('main',{user})}
+        // res.render('main',{user}) 
+        res.send(`welcome ${user}`)
+    }
     getCart(_,res){res.send("user's cart")}
     async getProfile(req,res){
         const username = req.params.username;

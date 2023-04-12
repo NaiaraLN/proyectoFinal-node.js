@@ -10,6 +10,11 @@ class ProdController extends ProductService{
         let product = await this.getProd(id)
         res.json(product)
     }
+    async getByCategory(req,res){
+        let category = req.params.category;
+        let products = await this.getAllProds(category)
+        res.json(products)
+    }
     async post(req,res){
         let product = await this.createProd(req.body)
         res.json(product)

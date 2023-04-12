@@ -9,6 +9,7 @@ export default class ProductDao{
             code:{type: Number, required:true, unique: true},
             thumbnail:{type: String, required:true},
             price:{type: Number, required:true},
+            category:{type:String, required:true},
             quantity:{type:Number}
         })
     }

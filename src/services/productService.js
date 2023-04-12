@@ -2,9 +2,9 @@ import MongoDao from '../model/mongoDao.js'
 import logger from '../scripts/logger.js'
 
 export default class ProductService{
-    async getAllProds(){
+    async getAllProds(category){
         try {
-            let products = await MongoDao.getAll('products')
+            let products = await MongoDao.getAll('products', null,null,category)
             return products
         } catch (error) {
             logger.error(`hubo un error al traer los productos ${error}`)
@@ -18,7 +18,7 @@ export default class ProductService{
             logger.error(`Producto no encontrado ${error}`)
         }
     }
-    async createProd({name,description,code,thumbnail,price,quantity}){
+    async createProd({name,description,code,thumbnail,price}){
         try {
             const product = {
                 date: Date.now(),
@@ -26,8 +26,7 @@ export default class ProductService{
                 description:description,
                 code:code,
                 thumbnail:thumbnail,
-                price:price,
-                quantity:quantity
+                price:price
             };
             let saveProd = await MongoDao.save('products',product)
             if(saveProd){return {status:'success',description:'El producto se guardó con éxito'}}
@@ -35,7 +34,7 @@ export default class ProductService{
             logger.error(`No se pudo guardar el producto ${error}`)
         }
     }
-    async updateProd(id,{_id,name,description,code,thumbnail,price,quantity}){
+    async updateProd(id,{_id,name,description,code,thumbnail,price}){
         try {
             let product = {
                 _id:_id,
@@ -44,8 +43,7 @@ export default class ProductService{
                 description:description,
                 code:code,
                 thumbnail:thumbnail,
-                price:price,
-                quantity:quantity
+                price:price
             };
             let newProd = await MongoDao.update('products',id,product)
             return newProd  
@@ -55,7 +53,7 @@ export default class ProductService{
     }
     async deleteProd(id){
         try {
-            let delProd = await MongoDao.deleteByID('products',id)
+            let delProd = await MongoDao.deleteById('products',id)
             return delProd
         } catch (error) {
             logger.error(`error al eliminar producto ${error}`)

@@ -16,9 +16,11 @@ socket.on('messages', messages => {
 });
 
 function addMessage(e){
+    const userMail = document.getElementById('user');
     const mail = document.getElementById('mail');
     const text = document.getElementById('text');
     const message = {
+        userMail: userMail.value,
         mail: mail.value,
         message: text.value,
     };

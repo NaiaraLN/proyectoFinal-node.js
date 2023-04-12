@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-import UserDao from "./userDao.js"
-import CartDao from "./cartDao.js"
+import ProductDao from "./productDao.js"
 
 export default class OrderDao{
     static get schema(){
         return new mongoose.Schema({
             date:{ type: Date, required: true},
-            user:UserDao.schema,
-            cart:CartDao.schema,
+            email:{type:String, required:true},
+            items:[ProductDao.schema],
             status:{type:String, required:true},
             number:{type:Number, required:true}
         })

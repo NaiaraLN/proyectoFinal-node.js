@@ -8,6 +8,8 @@ productsRouter.get('/', prodController.get.bind(prodController));
 
 productsRouter.get('/:id', prodController.getById.bind(prodController));
 
+productsRouter.get('/:category', prodController.getByCategory.bind(prodController));
+
 productsRouter.post('/', isAdmin, prodController.post.bind(prodController));
 
 productsRouter.put('/:id', isAdmin, prodController.put.bind(prodController));

@@ -1,4 +1,4 @@
-/* (async () => {
+(async () => {
     try {
         console.log('esta funcion se ejecuta')
         const response = await fetch('/', {
@@ -15,7 +15,7 @@
         console.log(error)
     }
 })()
- */
+/* 
 const header = async () => {
     try {
         console.log('esta funcion se ejecuta')
@@ -32,4 +32,4 @@ const header = async () => {
     } catch (error) {
         console.log(error)
     }
-}
+} */

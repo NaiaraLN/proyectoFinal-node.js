@@ -8,7 +8,7 @@ import session from "express-session";
 import logger from "./scripts/logger.js";
 import {productsRouter} from './routers/productRouter.js';
 import {cartRouter} from './routers/cartRouter.js';
-import passportRouter from './routers/homeRouter.js';
+import passportRouter from './routers/passportRouter.js';
 import chatRouter from "./routers/chatRouter.js";
 import cluster from 'cluster';
 import os from 'os';

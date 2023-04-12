@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js -p 8080 -m CLUSTER",
+    "start": "node src/server.js -p 8080",
     "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -35,7 +35,6 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "socket.io": "^4.6.1",
-    "twilio": "^4.7.2",
     "winston": "^3.8.2",
     "yargs": "^17.6.2"
   }

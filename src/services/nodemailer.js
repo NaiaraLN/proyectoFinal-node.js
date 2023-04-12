@@ -56,7 +56,7 @@ const signup = async (user) => {
 }
 
 const getOrder = async (order) => {
-    let cart = order.cart
+    let cart = order.items
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
@@ -74,7 +74,7 @@ const getOrder = async (order) => {
         }
     })
 
-    let products = cart.products.map(({name, description,code,price}) => {
+    let products = cart.map(({name, description,code,price}) => {
         return {
             item:name,
             description:description,
@@ -90,9 +90,9 @@ const getOrder = async (order) => {
                     data: [
                         {
                             idOrder:order._id.toString(),
-                            user:order.user.username,
-                            mail:order.user.mail,
-                            age:order.user.age
+                            mail:order.email,
+                            date:order.date,
+                            number:order.number
                         }
                     ]
                 },
