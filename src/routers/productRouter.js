@@ -1,19 +1,23 @@
 import {Router} from 'express'
 import {isAdmin} from "../middleware/isAuth.js";
-import prodController from '../controllers/productController.js';
+import productController from '../controllers/productController.js';
 
 const productsRouter = Router()
 
-productsRouter.get('/', prodController.get.bind(prodController));
+productsRouter.get('/', productController.get.bind(productController));
 
-productsRouter.get('/:id', prodController.getById.bind(prodController));
+productsRouter.get('/formulario',isAdmin, productController.getForm.bind(productController));
 
-productsRouter.get('/:category', prodController.getByCategory.bind(prodController));
+productsRouter.get('/:id', productController.getById.bind(productController));
 
-productsRouter.post('/', isAdmin, prodController.post.bind(prodController));
+productsRouter.get('/categoria/:category', productController.getByCategory.bind(productController));
 
-productsRouter.put('/:id', isAdmin, prodController.put.bind(prodController));
+productsRouter.get('/:id/actualizar', isAdmin,productController.updateForm.bind(productController));
 
-productsRouter.delete("/:id", isAdmin, prodController.delete.bind(prodController));
+productsRouter.post('/', isAdmin, productController.post.bind(productController));
+
+productsRouter.put('/:id', isAdmin, productController.put.bind(productController));
+
+productsRouter.delete("/:id", isAdmin, productController.delete.bind(productController));
 
 export { productsRouter};

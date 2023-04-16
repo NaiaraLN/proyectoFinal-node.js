@@ -5,14 +5,12 @@ import {URL} from 'url'
 
 class PassportController{
     getHome(req,res){
-        const user = req.user.username
-        // res.render('main',{user}) 
-        res.send(`welcome ${user}`)
+        res.redirect('/productos')
     }
     getCart(_,res){res.send("user's cart")}
     async getProfile(req,res){
         const username = req.params.username;
-        const user = await mongoDao.getUser('users',username)
+        const user = await mongoDao.getOne('users',username)
         res.json(user)
     }
     getRegister(_,res){res.render('register')}

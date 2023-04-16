@@ -1,10 +1,19 @@
-<div class="chat">
-    <button onclick="location.href='/chat/{{email}}'">Mensajes enviados</button>
+<div class="container">
+    <button class="btn" onclick="location.href='/chat/{{email}}'">Mensajes enviados</button>
     <div id="messages"></div>
     <form onsubmit='return addMessage(this)' class="form">
-        <input type="hidden" id="user" value="{{email}}">
-        <input type="mail" id="mail" class="form-input" placeholder="mail@mail.com" >
-        <input type="text" id="text" class="form-input" placeholder="Escribir...">
+        <input type="hidden" id="username" value="{{user.username}}">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="mail" placeholder="name@gmail.com">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Consulta</label>
+            <textarea class="form-control" id="text" rows="3"></textarea>
+        </div>
         <input type="submit" class="btn" value="Enviar">
     </form>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>

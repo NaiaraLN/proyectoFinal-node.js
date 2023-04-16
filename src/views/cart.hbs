@@ -1,0 +1,14 @@
+{{>navbar}}
+{{#each cart.items}}
+    <div class="card" style="width: 18rem;">
+    <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.name}}">
+    <div class="card-body">
+        <h5 class="card-title">{{this.name}}</h5>
+        <p class="card-text">Descripción: {{this.description}}</p>
+        <p class="card-text">Precio ${{this.price}}</p>
+        <p class="card-text">Cantidad: {{this.quantity}}</p>
+        {{!-- <a href="#" class="btn btn-primary">Cambiar cantidad</a> --}}
+    </div>
+    </div>
+{{/each}}
+{{>footer}}

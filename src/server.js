@@ -16,6 +16,7 @@ import { Server as HttpServer } from 'http';
 import {Server as IOServer } from 'socket.io';
 import {URL} from 'url'
 import ChatSocket from "./scripts/socket.js";
+import {user,admin} from './controllers/productController.js'
 
 // configuro dirname
 const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
@@ -28,8 +29,18 @@ const io = new IOServer(httpServer)
 // Configuro views
 const handlebarsConfig = {
     extname: '.hbs',
+    helpers:{
+        admin:function() {
+            return admin
+        },
+        user:function(){
+            return user
+        }
+    },
+    partialsDir: __dirname + './views/partials',
     defaultLayout: 'index.hbs'
 };
+
 app.engine("hbs", handlebars.engine((handlebarsConfig)));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, './views'));
@@ -57,7 +68,6 @@ app.use((req,res,next) => {
     logger.info(`Ruta ${method} ${url} implementada`)
     next()
 })
-
 app.use('/', passportRouter);
 app.use('/productos', productsRouter);
 app.use('/carrito', cartRouter);

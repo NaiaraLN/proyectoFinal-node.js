@@ -15,9 +15,9 @@ export default class ChatSocket{
         return [...this.messages]
     }
     async sendMessages(socket){
-            let mail = socket.user.mail;
+            /* let mail = socket.user.mail;
             let type;
-            socket.user?.username === 'admin' ? type = 'system' : type = 'user';
+            socket.user?.username === 'admin' ? type = 'system' : type = 'user'; */
             const messages = await ChatService.getAllMessages()
             // const messages = this.getAll()
             socket.emit('messages', messages)

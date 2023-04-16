@@ -58,3 +58,22 @@
 {"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading 'username')"}
 {"level":"error","message":"Error al guardar el objecto en la colección products: MongoServerError: E11000 duplicate key error collection: secondEcommerce.products index: code_1 dup key: { code: 12345 }"}
 {"level":"error","message":"error al eliminar producto TypeError: MongoDao.deleteByID is not a function"}
+{"level":"error","message":"Error al obtener el objeto de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al guardar el objecto en la colección products: ValidationError: category: Path `category` is required."}
+{"level":"error","message":"Error al actualizar el producto en la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al actualizar el producto en la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al actualizar el producto en la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}

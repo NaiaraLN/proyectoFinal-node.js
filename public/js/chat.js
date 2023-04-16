@@ -1,8 +1,8 @@
 const socket = io.connect();
 
 function showMessages(messages){
-    const message = messages.map(({mail,message}) => {
-        return `<li>${mail}</li> <li>${message}</li>`
+    const message = messages.map(({username,message}) => {
+        return `<li>${username}</li> <li>${message}</li>`
     })
     const html = `
         <ul>
@@ -16,11 +16,11 @@ socket.on('messages', messages => {
 });
 
 function addMessage(e){
-    const userMail = document.getElementById('user');
+    const username = document.getElementById('username');
     const mail = document.getElementById('mail');
     const text = document.getElementById('text');
     const message = {
-        userMail: userMail.value,
+        username: username.value,
         mail: mail.value,
         message: text.value,
     };

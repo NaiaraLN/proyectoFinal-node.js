@@ -1,0 +1,30 @@
+{{>navbar}}
+<form action='/productos' method='post'>
+        <h1>Agregar un producto</h1>
+        <div class="form-floating mb-3">
+            <input type="name" name="name" class="form-control" id="floatingInput" placeholder="libro1" required>
+            <label for="floatingInput">Nombre</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="description" class="form-control" id="floatingInput" placeholder="descripción del producto" required>
+            <label for="floatingInput">Descripción</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="category" class="form-control" id="floatingInput" placeholder="descripción del producto" required>
+            <label for="floatingInput">Categoria</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="code" class="form-control" id="floatingPassword" placeholder="12345" required>
+            <label for="floatingPassword">Código</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="url" name="thumbnail" class="form-control" id="floatingInput" placeholder="foto del producto" required>   
+            <label for="floatingInput">Foto</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="price" class="form-control" id="floatingInput" placeholder="145" required>
+            <label for="floatingInput">Precio</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+{{>footer}}

@@ -1,0 +1,22 @@
+<div class="card" style="width: 18rem;">
+            <img src="{{product.thumbnail}}" class="card-img-top" alt="{{this.name}}">
+            <div class="card-body">
+                <h2 class="card-title">{{product.name}}</h5>
+                <p class="card-text">Precio: ${{product.price}}</p>
+                <p class="card-text">Descripción: ${{product.description}}</p>
+                <form action="/carrito" method="post">
+                    <input type="hidden" name="_id" value="{{product.id}}">
+                    <input type="hidden" name="name" value="{{product.name}}">
+                    <input type="hidden" name="description" value="{{product.description}}">
+                    <input type="hidden" name="code" value="{{product.code}}">
+                    <input type="hidden" name="thumbnail" value="{{product.thumbnail}}">
+                    <input type="hidden" name="price" value="{{product.price}}">
+                    <input type="number" name="quantity" min="1" max="40" value="1">
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+                {{#if admin}}
+                    <a href='/productos/{{product.id}}/actualizar' class="btn btn-primary">Actualizar</a>
+                    <button class="btn" type="submit" id="deleteBtn" onclick="deleteProd({{this.id}})"><img src="https://cdn3.iconfinder.com/data/icons/user-interface-169/32/trash-256.png" alt="deleteIcon"></button>
+                {{/if}}
+            </div>
+</div>

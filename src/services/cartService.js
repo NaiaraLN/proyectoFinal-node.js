@@ -50,8 +50,6 @@ export default class CartService{
     }
     async updateCart(id,{_id,name,description,code,thumbnail,price,quantity},mail){
         try {
-            console.log(id)
-            console.log('HOLAA')
             let product = {
                 _id:_id,
                 date: Date.now(),
@@ -64,7 +62,6 @@ export default class CartService{
             }
             let cart = await this.getCart(mail)
             let prod = cart.products.find((prod) => prod._id.toString() === id)
-            console.log(prod)
             if (prod) {
                 let products = cart.products
                 let newCart = [...products]

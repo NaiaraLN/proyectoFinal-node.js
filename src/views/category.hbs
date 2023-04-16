@@ -1,5 +1,4 @@
 {{>navbar user=user}}
-<p>Hola {{user.username}}!</p>
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
         aria-expanded="false">
@@ -8,10 +7,9 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li><a class="dropdown-item" href="/productos">Ver todos</a></li>
         {{#each categories}}
-            <li><a class="dropdown-item" href="/productos/categoria/{{this}}">{{this}}</a></li>
+            <li><a class="dropdown-item" href="/productos/{{this}}">{{this}}</a></li>
         {{/each}}
     </ul>
 </div>
-{{log admin}}
-{{>products admin=admin products=products}}
+{{>products products=products}}
 {{>footer}}

@@ -42,7 +42,7 @@ class MongoDao {
             let obj = await this.models[collection].findById({_id:objId})
             return obj
         } catch (error) {
-            logger.error(`Error al obtener el objeto de la colección ${collection}: ${error}`)
+            logger.error(`Error al obtener el objeto por id de la colección ${collection}: ${error}`)
         }
     }
     async getOne(collection,property){

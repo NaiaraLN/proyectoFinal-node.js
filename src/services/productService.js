@@ -18,12 +18,13 @@ export default class ProductService{
             logger.error(`Producto no encontrado ${error}`)
         }
     }
-    async createProd({name,description,code,thumbnail,price}){
+    async createProd({name,description,code,thumbnail,price,category}){
         try {
             const product = {
                 date: Date.now(),
                 name: name,
                 description:description,
+                category:category,
                 code:code,
                 thumbnail:thumbnail,
                 price:price
@@ -34,13 +35,14 @@ export default class ProductService{
             logger.error(`No se pudo guardar el producto ${error}`)
         }
     }
-    async updateProd(id,{_id,name,description,code,thumbnail,price}){
+    async updateProd(id,{_id,name,description,code,thumbnail,price, category}){
         try {
             let product = {
                 _id:_id,
                 date: Date.now(),
                 name: name,
                 description:description,
+                category:category,
                 code:code,
                 thumbnail:thumbnail,
                 price:price
