@@ -1,5 +1,5 @@
 const username = document.getElementById('username').value;
-const socket = io.connect('http://localhost:8080/chat',{
+const socket = io.connect('https://proyectofinal-node-js.onrender.com/chat',{
     auth:{
         username: username
     }
