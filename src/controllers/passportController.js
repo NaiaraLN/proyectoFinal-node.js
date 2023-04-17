@@ -3,9 +3,6 @@ import mongoDao from "../model/mongoDao.js";
 import UserDTO from "../dto/userDTO.js";
 
 class PassportController{
-    getHome(_,res){
-        res.redirect('/productos')
-    }
     async getProfile(req,res){
         const username = req.params.username;
         let admin = req.user?.username === 'admin'
@@ -30,7 +27,7 @@ class PassportController{
     getLogout(req,res, next){
         req.logout(function(err) {
             if (err) { return next(err); }
-            res.redirect('/login');
+            res.redirect('/');
         });
     }
 }
