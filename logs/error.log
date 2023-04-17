@@ -77,3 +77,18 @@
 {"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
 {"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
 {"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección carts: ValidationError: products.0.price: Path `price` is required., products.0.category: Path `category` is required."}
+{"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}

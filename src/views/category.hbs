@@ -7,9 +7,14 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li><a class="dropdown-item" href="/productos">Ver todos</a></li>
         {{#each categories}}
-            <li><a class="dropdown-item" href="/productos/{{this}}">{{this}}</a></li>
+            <li><a class="dropdown-item" href="/productos/categoria/{{this}}">{{this}}</a></li>
         {{/each}}
     </ul>
 </div>
-{{>products products=products}}
+<div class="d-flex">
+    {{>products products=products admin=admin}}
+</div>
+
 {{>footer}}
+
+<script src="/js/products/deleteProd.js"></script>

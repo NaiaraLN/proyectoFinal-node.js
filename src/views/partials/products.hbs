@@ -1,14 +1,17 @@
 {{#each products}}
-<div class="card" style="width: 18rem;">
+<div class="card p-2 m-2 shadow-sm" style="width: 18rem;">
             <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.name}}">
             <div class="card-body">
-                <h2 class="card-title">{{this.name}}</h5>
+                <h2 class="card-title text-center fs-4">{{this.name}}</h5>
                 <p class="card-text">Precio: ${{this.price}}</p>
                 <a href='/productos/{{this.id}}' class="btn btn-primary">Ver detalles</a>
-                {{log ../admin}}
                 {{#if ../admin}}
-                    <a href='/productos/{{this.id}}/actualizar' class="btn btn-primary">Actualizar</a>
-                    <button class="btn btn-danger" type="submit" id="deleteBtn" onclick="deleteProd({{this.id}})"><img src="https://cdn3.iconfinder.com/data/icons/user-interface-169/32/trash-256.png" alt="deleteIcon" width="30px"></button>
+                    <a href='/productos/{{this.id}}/actualizar' class="btn btn-warning"><img src="https://cdn3.iconfinder.com/data/icons/feather-5/24/edit-256.png" width="25px" alt="editIcon"></a>
+                    <form>
+                        <input type="hidden" id="prodId" value="{{this.id}}">
+                        <button class="btn btn-danger" type="submit" id="deleteBtn"><img src="https://cdn3.iconfinder.com/data/icons/user-interface-169/32/trash-256.png" width="25px" alt="deleteIcon"></button>
+                    </form>
+                    
                 {{/if}}
             </div>
 </div>

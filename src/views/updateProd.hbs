@@ -1,6 +1,7 @@
-{{>navbar}}
-<form>
-        <h1>{{title}}</h1>
+{{>navbar user=user}}
+<div class="min-vh-100">
+    <form>
+        <h1>Actualizar Producto</h1>
         <div class="form-floating mb-3">
             <input type="hidden" name="id" id="prodId" value="{{product.id}}">
             <input type="name" name="name" class="form-control" id="prodName" placeholder="libro1" value="{{product.name}}" required>
@@ -28,6 +29,8 @@
         </div>
         <button type="submit" class="btn btn-primary"  id="updateBtn">Enviar</button>
 </form>
+</div>
 {{>footer}}
 
-<script src="/js/products.js"></script>
+
+<script src="/js/products/updateProd.js"></script>

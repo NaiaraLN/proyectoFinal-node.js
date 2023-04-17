@@ -16,7 +16,6 @@ import { Server as HttpServer } from 'http';
 import {Server as IOServer } from 'socket.io';
 import {URL} from 'url'
 import ChatSocket from "./scripts/socket.js";
-import {user,admin} from './controllers/productController.js'
 
 // configuro dirname
 const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
@@ -29,12 +28,12 @@ const io = new IOServer(httpServer)
 // Configuro views
 const handlebarsConfig = {
     extname: '.hbs',
-    helpers:{
-        admin:function() {
-            return admin
+    helpers: {
+        subTotal:function(price,quantity){
+            return price*quantity;
         },
-        user:function(){
-            return user
+        totalPrice:function(cart){
+            return cart.reduce((acc, product) => acc += (product.quantity * product.price), 0)
         }
     },
     partialsDir: __dirname + './views/partials',

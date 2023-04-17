@@ -1,17 +1,16 @@
 import logger from "../scripts/logger.js";
 import mongoDao from "../model/mongoDao.js";
-import {URL} from 'url'
-
+import UserDTO from "../dto/userDTO.js";
 
 class PassportController{
-    getHome(req,res){
+    getHome(_,res){
         res.redirect('/productos')
     }
-    getCart(_,res){res.send("user's cart")}
     async getProfile(req,res){
         const username = req.params.username;
         const user = await mongoDao.getOne('users',username)
-        res.json(user)
+        let userDto = new UserDTO(user)
+        res.json(userDto)
     }
     getRegister(_,res){res.render('register')}
 

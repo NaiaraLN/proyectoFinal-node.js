@@ -11,21 +11,22 @@ export default class CartService{
             logger.error(`Error: carrito no encontrado ${error}`)
         }
     }
-    async postCart({_id,name,description,code,thumbnail,price,quantity}, username){
+    async postCart({_id,name,category,description,code,thumbnail,price,quantity}, username){
         try {
             let user = await MongoDao.getOne('users',username)
             const cart = await MongoDao.getOne('carts', user.mail)
             if (cart) {
-                return await this.updateCart(_id,{_id,name,description,code,thumbnail,price,quantity},user.mail)
+                return await this.updateCart(_id,{_id,name,category,description,code,thumbnail,price,quantity},user.mail)
             }else{
-                return await this.createCart({_id,name,description,code,thumbnail,price,quantity}, username)
+                return await this.createCart({_id,name,category,description,code,thumbnail,price,quantity}, username)
             }
         } catch (error) {
             logger.error(`Error: no se pudo crear o actualizar el carrito: ${error}`)
         }
     }
-    async createCart({_id,name,description,code,thumbnail,price,quantity},username){
+    async createCart({_id,name,category,description,code,thumbnail,price,quantity},username){
         try {
+            console.log(category)
             let user = await MongoDao.getOne('users',username)
             let cart = {
                 email: user.mail,
@@ -39,16 +40,18 @@ export default class CartService{
                     code:code,
                     thumbnail:thumbnail,
                     price:price,
+                    category:category,
                     quantity:quantity
                 }
             }
+            console.log(cart)
             let saveCart = await MongoDao.save('carts',cart)
             if(saveCart){return {status:200,description:'El carrito se guardó con éxito'}}
         } catch (error) {
             logger.error(`No se pudo guardar el producto ${error}`)
         }
     }
-    async updateCart(id,{_id,name,description,code,thumbnail,price,quantity},mail){
+    async updateCart(id,{_id,name,description,code,thumbnail,price,category,quantity},mail){
         try {
             let product = {
                 _id:_id,
@@ -58,16 +61,16 @@ export default class CartService{
                 code:code,
                 thumbnail:thumbnail,
                 price:price,
+                category:category,
                 quantity:quantity
             }
             let cart = await this.getCart(mail)
             let prod = cart.products.find((prod) => prod._id.toString() === id)
             if (prod) {
-                let products = cart.products
-                let newCart = [...products]
-                let index = cart.products.indexOf(prod)
-                newCart[index].quantity += quantity
-                console.log(`este es el newCart: ${newCart}`)
+                let products = cart.products;
+                let index = cart.products.indexOf(prod);
+                let newCart = [...products];
+                newCart[index].quantity += Number(quantity);
                 let update = await MongoDao.update('carts', cart._id, newCart)
                 return update
             } else {
@@ -95,7 +98,8 @@ export default class CartService{
                 }
                 const saveOrder = await MongoDao.save('orders', newOrder);
                 const order = await MongoDao.getByID('orders', saveOrder._id);
-                return await getOrder(order);
+                await getOrder(order);
+                return order;
             }else{
                 const newOrder = {
                     date:Date.now(),
@@ -106,7 +110,8 @@ export default class CartService{
                 }
                 const saveOrder = await MongoDao.save('orders', newOrder);
                 const order = await MongoDao.getByID('orders', saveOrder._id);
-                return await getOrder(order);
+                await getOrder(order);
+                return order
             }
             
         } catch (error) {

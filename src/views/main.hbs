@@ -1,5 +1,5 @@
 {{>navbar user=user}}
-<p>Hola {{user.username}}!</p>
+<h1>Hola {{user.username}}!</h1>
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
         aria-expanded="false">
@@ -12,6 +12,10 @@
         {{/each}}
     </ul>
 </div>
-{{log admin}}
-{{>products admin=admin products=products}}
+<div class="min-vh-100 d-flex flex-wrap justify-content-center">
+    {{>products admin=admin products=products}}
+</div>
+
 {{>footer}}
+
+<script src="/js/products/deleteProd.js"></script>

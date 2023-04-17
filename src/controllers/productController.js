@@ -40,7 +40,7 @@ class ProdController extends ProductService{
         let category = req.params.category;
         let products = await this.getAllProds(category)
         const prod = products.map(prod => new ProductDTO(prod))
-        res.render('category',{products:prod, user:user, categories})
+        res.render('category',{products:prod, user:user, categories, admin:admin})
     }
     async post(req,res){
         console.log(' prodController post')
@@ -60,13 +60,12 @@ class ProdController extends ProductService{
         }
     }
     async delete(req,res){
-        console.log(' prodController put')
+        console.log(' prodController delete')
         let id = req.params.id;
         let product = await this.deleteProd(id)
         if(product){
-            res.redirect('/productos')
+            res.sendStatus(200)
         }
     }
 }
 export default new ProdController()
-export {user,admin}

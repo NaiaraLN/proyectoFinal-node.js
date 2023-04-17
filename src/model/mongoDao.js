@@ -27,10 +27,16 @@ class MongoDao {
             [MessagesDao.model]: mongoose.model(MessagesDao.model, MessagesDao.schema)
         }
     }
-    async getAll(collection, mail, type, category) {
+    async getAll(collection,param) {
         try {
-            let array = await this.models[collection].find({$or:[{mail:mail}, {type:type},{category:category},{}]})
+            if(param){
+                let array = await this.models[collection].find({$or:[{'mail':param}, {'type':param},{'category':param}]})
                 return array
+            }else{
+                let array = await this.models[collection].find({})
+                return array
+            }
+            
         } catch (error) {
             logger.error(`Error al obtener los datos de la colección ${collection}: ${error}`)
         }

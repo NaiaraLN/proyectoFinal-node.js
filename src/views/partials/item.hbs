@@ -1,12 +1,15 @@
-<div class="card" style="width: 18rem;">
-            <img src="{{product.thumbnail}}" class="card-img-top" alt="{{this.name}}">
-            <div class="card-body">
+<div class="card d-flex flex-sm-column flex-lg-row align-items-center w-75 h-50 shadow-sm">
+            <div class="w-25">
+                <img src="{{product.thumbnail}}" class="card-img-top" alt="{{this.name}}">
+            </div>
+            <div class="card-body w-50">
                 <h2 class="card-title">{{product.name}}</h5>
                 <p class="card-text">Precio: ${{product.price}}</p>
-                <p class="card-text">Descripción: ${{product.description}}</p>
+                <p class="card-text">Descripción: {{product.description}}</p>
                 <form action="/carrito" method="post">
                     <input type="hidden" name="_id" value="{{product.id}}">
                     <input type="hidden" name="name" value="{{product.name}}">
+                    <input type="hidden" name="category" value="{{product.category}}">
                     <input type="hidden" name="description" value="{{product.description}}">
                     <input type="hidden" name="code" value="{{product.code}}">
                     <input type="hidden" name="thumbnail" value="{{product.thumbnail}}">

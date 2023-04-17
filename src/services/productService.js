@@ -4,7 +4,8 @@ import logger from '../scripts/logger.js'
 export default class ProductService{
     async getAllProds(category){
         try {
-            let products = await MongoDao.getAll('products', null,null,category)
+            let products = await MongoDao.getAll('products',category)
+            // console.log(products)
             return products
         } catch (error) {
             logger.error(`hubo un error al traer los productos ${error}`)

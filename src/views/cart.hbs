@@ -1,14 +1,48 @@
-{{>navbar}}
-{{#each cart.items}}
-    <div class="card" style="width: 18rem;">
-    <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.name}}">
-    <div class="card-body">
-        <h5 class="card-title">{{this.name}}</h5>
-        <p class="card-text">Descripción: {{this.description}}</p>
-        <p class="card-text">Precio ${{this.price}}</p>
-        <p class="card-text">Cantidad: {{this.quantity}}</p>
-        {{!-- <a href="#" class="btn btn-primary">Cambiar cantidad</a> --}}
-    </div>
-    </div>
-{{/each}}
+{{>navbar user=user}}
+<div class="d-flex flex-sm-column min-vh-100 align-items-center">
+    {{#if cart.items.length}}
+        {{#each cart.items}}
+        <div class="card d-flex flex-sm-column flex-lg-row w-75 h-25 p-2 m-2 shadow-sm ">
+            <div class="w-25">
+                <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.name}}">
+            </div>
+            <div class="card-body w-75">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p class="card-text">Descripción: {{this.description}}</p>
+                <p class="card-text">Precio unitario: ${{this.price}}</p>
+                <p class="card-text">Subtotal: ${{subTotal this.price this.quantity}}</p>
+                <p class="card-text">Cantidad: {{this.quantity}}</p>
+                <div class="d-flex justify-content-evenly">
+                    <form>
+                        <input type="hidden" id="cartProd" value="{{this.id}}">
+                        <button class="btn btn-danger" type="submit" id="delCartProd"><img src="https://cdn3.iconfinder.com/data/icons/user-interface-169/32/trash-256.png" width="25px" alt="deleteIcon"></button>
+                    </form>
+                    <form >
+                        <input type="hidden" id="_id" value="{{this.id}}">
+                        <input type="hidden" id="name" value="{{this.name}}">
+                        <input type="hidden" id="category" value="{{this.category}}">
+                        <input type="hidden" id="description" value="{{this.description}}">
+                        <input type="hidden" id="code" value="{{this.code}}">
+                        <input type="hidden" id="thumbnail" value="{{this.thumbnail}}">
+                        <input type="hidden" id="price" value="{{this.price}}">
+                        <input type="number" style="width: 50px;" id="qty" min="1" max="40" value="{{this.quantity}}">
+                        <button class="btn btn-warning" id="updateQty">Modificar cantidad</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+            <p>Precio Total: {{totalPrice cart.items}}</p>
+            <button class="btn btn-danger" type="submit" id="emptyCart">Vaciar carrito</button>
+            <form action="/carrito/checkout" method="post">
+                <button class="btn btn-primary" type="submit">Checkout</button>
+            </form>
+    {{else}}
+        <p>No hay productos en el carrito</p>
+        <a href="/productos" class="btn btn-primary">Ir a la tienda</a>
+    {{/if}}
+</div>
 {{>footer}}
+
+<script src="/js/cart/cart.js"></script>

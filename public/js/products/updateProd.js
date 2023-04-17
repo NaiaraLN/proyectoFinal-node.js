@@ -1,10 +1,4 @@
 (function () {
-    async function deleteProd(e) {
-        const id = document.getElementById('prodId').value;
-        await fetch(`/productos/${id}`, { method: "DELETE" })
-        return false
-    }
-
     const updateBtn = document.getElementById('updateBtn');
     updateBtn.addEventListener('click', async function updateProd(e) {
         e.preventDefault()
