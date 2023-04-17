@@ -6,9 +6,9 @@
 * https://proyectofinal-node-js.onrender.com
 
 ## Prerequisites
-1.NodeJS
-2.NPM
-3.Nodemon
+1. NodeJS
+2. NPM
+3. Nodemon
 
 ## Technologies
 * NodeJS
@@ -37,9 +37,9 @@
 
 ### Usage
 
-*In the terminal write `npm start`
-*To view it in your browser, it will open on http://localhost:8080.
+* In the terminal write `npm start`
+* To view it in your browser, it will open on http://localhost:8080.
 
 ### Dev
-*`npm run dev`
+* `npm run dev`
 
