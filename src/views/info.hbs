@@ -1,0 +1,74 @@
+{{>navbar user=user}}
+<main>
+    <section>
+        <h1>Información del servidor</h1>
+        <table class="table m-2">
+            <tbody>
+                <tr>
+                    <th scope="row">Modo</th>
+                    <td>{{info.mode}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Modo del servidor</th>
+                    <td>{{info.serverMode}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Script</th>
+                    <td>{{info.script}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Puerto</th>
+                    <td>{{info.port}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Plataforma</th>
+                    <td>{{info.platform}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Versión</th>
+                    <td>{{info.version}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Memoria</th>
+                    <td>{{info.memory}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Path</th>
+                    <td>{{info.path}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{info.id}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nombre de la carpeta</th>
+                    <td>{{info.dirname}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mail de admin</th>
+                    <td>{{info.adminMail}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tiempo de sesión en segs</th>
+                    <td>{{info.session}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Url de Mongo</th>
+                    <td>{{info.mongoUrl}}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        {{#if args.length}}
+            <h2>Argumentos pasados por la terminal</h2>
+            {{#each args}}
+            <ul class="list-group">
+                <li class="list-group-item">{{this}}</li>
+            </ul>
+            {{/each}}
+        {{else}}
+            <p>No se pasaron argumentos por la terminal</p>
+        {{/if}}
+    </section>
+</main>
+{{>footer}}

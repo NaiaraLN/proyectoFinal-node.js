@@ -7,6 +7,7 @@ const yargs = yargsParse(process.argv.slice(2))
 const MONGO_URI = process.env.MONGO_URI;
 const ADMIN_MAIL = process.env.ADMIN_MAIL;
 const ADMIN_PASS = process.env.ADMIN_PASS;
+const SESSION = process.env.SESSION;
 
 const {port, mode} = yargs
     .boolean('debug')
@@ -25,6 +26,7 @@ export {
     MONGO_URI,
     ADMIN_MAIL, 
     ADMIN_PASS,
+    SESSION,
     port,
     mode
 }

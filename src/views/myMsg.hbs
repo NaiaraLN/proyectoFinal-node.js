@@ -1,4 +1,19 @@
-<div class="chat">
-    <button onclick="location.href='/chat'">Ir al chat</button>
-    <div id="myMsg"></div>
-</div>
+{{>navbar user=user}}
+<main class="container min-vh-100 d-flex flex-column justify-content-center align-items-center w-100">
+    <section class="border rounded-1 w-100 d-flex flex-column justify-content-center align-items-center shadow-sm">
+        <button class="btn btn-secondary m-2" onclick="location.href='/chat'">Ir al chat</button>
+        <div class="w-75">
+            {{#if messages}}
+                <ul class="list-group list-group-flush">
+                    {{#each messages}}
+                    <li class="list-group-item">{{this.username}} | {{this.message}}</li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <p>No hay mensajes suyos</p>
+            {{/if}}
+        </div>
+    </section>
+
+</main>
+{{>footer}}

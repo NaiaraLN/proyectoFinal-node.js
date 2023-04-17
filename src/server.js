@@ -1,4 +1,4 @@
-import {MONGO_URI, port, mode} from "./config.js";
+import {MONGO_URI,SESSION, port, mode} from "./config.js";
 import express from 'express'
 import handlebars from "express-handlebars";
 import path from "path";
@@ -9,6 +9,7 @@ import logger from "./scripts/logger.js";
 import {productsRouter} from './routers/productRouter.js';
 import {cartRouter} from './routers/cartRouter.js';
 import passportRouter from './routers/passportRouter.js';
+import infoRouter from "./routers/infoRouter.js";
 import chatRouter from "./routers/chatRouter.js";
 import cluster from 'cluster';
 import os from 'os';
@@ -52,7 +53,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl:MONGO_URI, 
         mongoOptions:advancedOptions,
-        ttl:600
+        ttl:SESSION
     }),
     secret: 'shhhhhhhhhhhhhhhhhhhhh',
     resave: false,
@@ -70,7 +71,8 @@ app.use((req,res,next) => {
 app.use('/', passportRouter);
 app.use('/productos', productsRouter);
 app.use('/carrito', cartRouter);
-app.use('/chat', chatRouter)
+app.use('/chat', chatRouter);
+app.use('/info', infoRouter)
 
 
 app.all('*', (req, res) => {

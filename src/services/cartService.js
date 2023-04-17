@@ -26,7 +26,6 @@ export default class CartService{
     }
     async createCart({_id,name,category,description,code,thumbnail,price,quantity},username){
         try {
-            console.log(category)
             let user = await MongoDao.getOne('users',username)
             let cart = {
                 email: user.mail,
@@ -44,7 +43,6 @@ export default class CartService{
                     quantity:quantity
                 }
             }
-            console.log(cart)
             let saveCart = await MongoDao.save('carts',cart)
             if(saveCart){return {status:200,description:'El carrito se guardó con éxito'}}
         } catch (error) {
@@ -86,9 +84,9 @@ export default class CartService{
         try {
             let cart = await this.getCart(mail)
             const user = await MongoDao.getOne('users',username);
-            let orders = await MongoDao.getAll('orders')
+            let orders = await MongoDao.getAll('orders');
             if (orders.length > 0) {
-                let lastOrder = orders.reduce((acc, item) => item.id > acc ? acc = item.id : acc, 0)
+                let lastOrder = orders.reduce((acc, item) => item.number > acc ? acc = item.number : acc, 0)
                 const newOrder = {
                     date:Date.now(),
                     email:user.mail,

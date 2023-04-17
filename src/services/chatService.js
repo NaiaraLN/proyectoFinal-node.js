@@ -2,15 +2,10 @@ import MongoDao from "../model/mongoDao.js";
 import logger from "../scripts/logger.js";
 
 class ChatService{
-    async getAllMessages(email,type){
+    async getAllMessages(){
         try {
-            if (type === 'system') {
-                const chat = await MongoDao.getAll('messages',email, type)
-                return chat
-            } else {
-                const chat = await MongoDao.getAll('messages', email)
-                return chat
-            }
+            const chat = await MongoDao.getAll('messages')
+            return chat
             
         } catch (error) {
             logger.error(`error al traer los mensajes: ${error}`)
@@ -18,8 +13,13 @@ class ChatService{
     }
     async getByType(email,type){
         try {
-            const messages = await MongoDao.getAll('messages', email, type)
-            return messages
+            if(type === 'system'){
+                const messages = await MongoDao.getAll('messages', type)
+                return messages
+            }else{
+                const messages = await MongoDao.getAll('messages', email,type)
+                return messages
+            }
         } catch (error) {
             logger.error(`error al traer los mensajes del usuario: ${error}`)
         }
@@ -32,7 +32,10 @@ class ChatService{
                 date: Date.now(),
                 message: text
             }
-            return await MongoDao.save('messages', message)
+            const save = await MongoDao.save('messages', message)
+            if(save){
+                return {status:200}
+            }
         } catch (error) {
             logger.error(`error al guardar los mensajes: ${error}`)
         }

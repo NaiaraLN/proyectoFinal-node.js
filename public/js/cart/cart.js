@@ -4,9 +4,7 @@
         e.preventDefault();
         try {
             const id = document.getElementById('cartProd').value;
-            console.log(id)
             const respuesta = await fetch(`/carrito/${id}`, { method: 'DELETE' });
-            console.log(respuesta)
             if (respuesta) {
                 location.href = '/carrito';
             }
@@ -20,7 +18,6 @@
         e.preventDefault();
         try {
             const respuesta = await fetch('/carrito', { method: 'DELETE' });
-            console.log(respuesta)
             if (respuesta) {
                 location.href = '/carrito';
             }
@@ -57,7 +54,6 @@
                 },
                 body: JSON.stringify(product)
             })
-            console.log(respuesta)
             if(respuesta){
                 location.href = '/carrito'
             }

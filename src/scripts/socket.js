@@ -1,42 +1,29 @@
 import ChatService from "../services/chatService.js"
-import mongoDao from "../model/mongoDao.js"
 import logger from "./logger.js"
 
 export default class ChatSocket{
     constructor(io){
-        this.messages = []
-        this.connection = io.on('connection', async (socket) =>{
+        this.connection = io.of('/chat').on('connection', async (socket) =>{
             logger.info(`Un usuario esta conectado ${socket.id}`)
             await this.sendMessages(socket)
-            await this.newMessages(socket, io)
+            await this.newMessages(socket)
         })
     }
-    getAll(){
-        return [...this.messages]
-    }
     async sendMessages(socket){
-            /* let mail = socket.user.mail;
-            let type;
-            socket.user?.username === 'admin' ? type = 'system' : type = 'user'; */
-            const messages = await ChatService.getAllMessages()
-            // const messages = this.getAll()
+            const messages = await ChatService.getAllMessages();
             socket.emit('messages', messages)
     }
 
-    async newMessages(socket, io){
+    async newMessages(socket){
             socket.on('newMessage', async (message) => {
-                let mail = message.userMail;
-                /* const user = mongoDao.getUser(mail)
-                let type;
-                user.username === 'admin' ? type = 'system' : type = 'user';
-                const save = await ChatService.saveMessages(message,type) */
-                this.messages.push(message)
-                /* if (save) {
-                    const messages = await ChatService.getAllMessages(mail,type)
-                    io.emit('messages', messages)
-                } */
-                const messages = this.getAll()
-                io.emit('messages', messages)
+                let username = socket.handshake.auth.username;
+                let type
+                username === 'admin' ? type='system' : type='user';
+                const save = await ChatService.saveMessages(message,type)
+                if (save) {
+                    const messages = await ChatService.getAllMessages();
+                    socket.emit('messages', messages)
+                }
             })
     }
 }

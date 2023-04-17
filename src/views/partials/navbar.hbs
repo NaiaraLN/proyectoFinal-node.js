@@ -24,6 +24,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/productos/formulario">Agregar producto</a></li>
+                            <li><a class="dropdown-item" href="/info">Información del servidor</a></li>
                         </ul>
                     </li>
                 {{/if}}
@@ -31,7 +32,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/avatar/{{user.avatar}}" alt="{{user.username}}" width="8px"/>{{user.username}}
+                        <img src="/img/{{user.avatar}}" alt="{{user.username}}" class="border rounded-circle" width="30px"/>{{user.username}}
                     </a>
                     
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

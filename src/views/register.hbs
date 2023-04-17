@@ -1,36 +1,49 @@
-<div>
-    <form action="/register" method="post" enctype="multipart/form-data">
-        <h1>Sign Up</h1>
-        <div class="form-floating mb-3">
-            <input type="mail" name="mail" class="form-control" id="floatingInput" placeholder="mail@mail.com" required>
-            <label for="floatingInput">Mail</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="name" name="username" class="form-control" id="floatingInput" placeholder="username" required>
-            <label for="floatingInput">Nombre de usuario</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="password" required>
-            <label for="floatingPassword">Contraseña</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" name="address" class="form-control" id="floatingInput" placeholder="dirección" required>   
-            <label for="floatingInput">Dirección</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="number" name="age" class="form-control" id="floatingInput" placeholder="edad" required>
-            <label for="floatingInput">Edad en número</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="number" name="phone" class="form-control" id="floatingInput" placeholder="+54(número)" required>
-            <label for="floatingInput">Número de teléfono</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="file" name="avatar" class="form-control" id="floatingInput" placeholder="suba una foto" required>
-            <label for="floatingInput">Avatar</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+<main class=" min-vh-100 d-flex flex-column align-items-center">
+    <section class="w-50 d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <form action="/register" method="post" enctype="multipart/form-data" class="needs-validation w-100 p-4 d-flex flex-column align-items-center justify-content-center  border rounded-1 shadow">
+            <h1>Sign Up</h1>
+            <div class="form-floating mb-3 w-75">
+                <input type="mail" name="mail" class="form-control" id="floatingInput" placeholder="mail@mail.com"
+                    required>
+                <label for="floatingInput">Mail</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="name" name="username" class="form-control" id="floatingInput" placeholder="username"
+                    required>
+                <label for="floatingInput">Nombre de usuario</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="password"
+                    required>
+                <label for="floatingPassword">Contraseña</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="text" name="address" class="form-control" id="floatingInput" placeholder="dirección"
+                    required>
+                <label for="floatingInput">Dirección</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="number" name="age" class="form-control" id="floatingInput" placeholder="edad" required>
+                <label for="floatingInput">Edad en número</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="number" name="phone" class="form-control" id="floatingInput" placeholder="+54(número)"
+                    required>
+                <label for="floatingInput">Número de teléfono</label>
+            </div>
+            <div class="form-floating mb-3 w-75">
+                <input type="file" name="avatar" class="form-control" id="floatingInput" placeholder="suba una foto"
+                    required>
+                <label for="floatingInput">Avatar</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
 
-    </form>
-    <button class="btn" onclick="location.href = '/login'">Log in</button>
-</div>
+        </form>
+        <div class="w-75 mt-2 d-flex flex-column align-items-center">
+            <p>Ya tenés cuenta?</p>
+            <button class="btn w-50  btn-secondary" onclick="location.href = '/login'">Log in</button>
+        </div>
+        
+    </section>
+
+</main>

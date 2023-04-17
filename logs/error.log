@@ -92,3 +92,40 @@
 {"level":"error","message":"Error al obtener el objeto por id de la colección products: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}
 {"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
 {"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: message: Path `message` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: message: Path `message` is required."}
+{"level":"error","message":"Error al guardar el objecto en la colección messages: ValidationError: message: Path `message` is required."}
+{"level":"error","message":"error al guardar los mensajes: ReferenceError: Cannot access 'message' before initialization"}
+{"level":"error","message":"error al guardar los mensajes: ReferenceError: Cannot access 'message' before initialization"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.cartSchema.products.code_1 dup key: { cart.cartSchema.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}
+{"level":"error","message":"Error al guardar el objecto en la colección orders: MongoServerError: E11000 duplicate key error collection: secondEcommerce.orders index: cart.products.code_1 dup key: { cart.products.code: null }"}
+{"level":"error","message":"error al guardar la orden TypeError: Cannot read properties of undefined (reading '_id')"}

@@ -27,10 +27,13 @@ class MongoDao {
             [MessagesDao.model]: mongoose.model(MessagesDao.model, MessagesDao.schema)
         }
     }
-    async getAll(collection,param) {
+    async getAll(collection,param,type) {
         try {
-            if(param){
+            if(param && !type){
                 let array = await this.models[collection].find({$or:[{'mail':param}, {'type':param},{'category':param}]})
+                return array
+            }else if(param && type){
+                let array = await this.models[collection].find({$and:[{'mail':param}, {'type':type}]});
                 return array
             }else{
                 let array = await this.models[collection].find({})

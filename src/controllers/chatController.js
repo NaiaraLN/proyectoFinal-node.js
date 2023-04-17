@@ -1,16 +1,23 @@
 import ChatService from "../services/chatService.js";
+import MessageDTO from "../dto/messageDTO.js";
+import UserDTO from "../dto/userDTO.js";
 
 class ChatController{
     async getAll(req,res){
         let email = req.user?.mail;
-        res.render('chat', {email})
+        let admin = req.user?.username === 'admin'
+        let user = req.user? new UserDTO(req.user,admin) : null
+        res.render('chat', {email, user:user})
     }
     async getUserMsg(req,res){
         let type
-        req.user?.username === 'asistente' ? type='system' : type='user'
+        req.user?.username === 'admin' ? type='system' : type='user'
         let email = req.params.email
-        const messages = await ChatService.getByType(email, type)
-        res.render('myMsg', {messages})
+        let admin = req.user?.username === 'admin'
+        let user = req.user? new UserDTO(req.user,admin) : null
+        const msgs = await ChatService.getByType(email, type)
+        let messages = msgs.map(msg => new MessageDTO(msg,user.username))
+        res.render('myMsg', {messages, user})
     }
 }
 

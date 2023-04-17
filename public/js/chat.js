@@ -1,11 +1,16 @@
-const socket = io.connect();
+const username = document.getElementById('username').value;
+const socket = io.connect('http://localhost:8080/chat',{
+    auth:{
+        username: username
+    }
+});
 
 function showMessages(messages){
-    const message = messages.map(({username,message}) => {
-        return `<li>${username}</li> <li>${message}</li>`
+    const message = messages.map(({mail,message}) => {
+        return `<li class="rounded-2 list-group-item mb-2 shadow-sm bg-body">${mail} | ${message}</li>`
     })
     const html = `
-        <ul>
+        <ul class="list-group">
         ${message.join('\n')}
         </ul>`
     const allMessages = document.getElementById("messages");
@@ -16,13 +21,11 @@ socket.on('messages', messages => {
 });
 
 function addMessage(e){
-    const username = document.getElementById('username');
     const mail = document.getElementById('mail');
     const text = document.getElementById('text');
     const message = {
-        username: username.value,
         mail: mail.value,
-        message: text.value,
+        text: text.value,
     };
     socket.emit('newMessage', message);
     return false;

@@ -8,9 +8,10 @@ class PassportController{
     }
     async getProfile(req,res){
         const username = req.params.username;
+        let admin = req.user?.username === 'admin'
         const user = await mongoDao.getOne('users',username)
-        let userDto = new UserDTO(user)
-        res.json(userDto)
+        let userDto = new UserDTO(user, admin)
+        res.render('profile',{user:userDto})
     }
     getRegister(_,res){res.render('register')}
 

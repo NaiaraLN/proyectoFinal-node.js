@@ -1,19 +1,23 @@
-<div class="container">
-    <button class="btn" onclick="location.href='/chat/{{email}}'">Mensajes enviados</button>
-    <div id="messages"></div>
-    <form onsubmit='return addMessage(this)' class="form">
-        <input type="hidden" id="username" value="{{user.username}}">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="mail" placeholder="name@gmail.com">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Consulta</label>
-            <textarea class="form-control" id="text" rows="3"></textarea>
-        </div>
-        <input type="submit" class="btn" value="Enviar">
-    </form>
-</div>
+{{>navbar user=user}}
+<main class="container min-vh-100 d-flex flex-column justify-content-center align-items-center w-75">
+    <div class="border rounded-1 w-100 d-flex flex-column justify-content-center align-items-center shadow-sm">
+        <button class="btn btn-secondary m-2" onclick="location.href='/chat/{{email}}'">Mensajes enviados</button>
+        <div id="messages" class="d-flex justify-content-end w-50 h-25 border p-2" style="height: 40%"></div>
+        <form onsubmit='return addMessage(this)' class="form w-50 d-flex flex-column justify-content-end  align-items-center">
+            <input type="hidden" id="username" value="{{user.username}}">
+            <div class="mb-3 w-75">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="mail" placeholder="name@gmail.com">
+            </div>
+            <div class="mb-3 w-75">
+                <label for="exampleFormControlTextarea1" class="form-label">Consulta</label>
+                <textarea class="form-control" id="text"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary mb-2" value="Enviar">
+        </form>
+    </div>
 
+</main>
+{{>footer}}
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat.js"></script>
